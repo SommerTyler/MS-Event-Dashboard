@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="de" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script>
+      (function() {
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+      })();
+    </script>
+    <title>MS Dashboard - Finanzen</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com"/>
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist+Mono:wght@400;500;600&family=Geist:wght@400;500;600&display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <a href="home.html" class="sidebar-header" style="cursor:pointer">
+                <i class="fa-solid fa-cube logo-icon"></i>
+                <h2>MS Dashboard</h2>
+            </a>
+            <ul class="nav-links">
+                <li><a href="home.html"><i class="fa-solid fa-house"></i> Home</a></li>
+                <li><a href="index.html"><i class="fa-solid fa-chart-pie"></i> Übersicht</a></li>
+                <li><a href="projekte.html"><i class="fa-solid fa-folder-open"></i> Projekte</a></li>
+                <li><a href="personal.html"><i class="fa-solid fa-users"></i> Personal</a></li>
+                <li><a href="analytik.html"><i class="fa-solid fa-chart-line"></i> Analytik</a></li>
+                <li class="active"><a href="finanzen.html"><i class="fa-solid fa-sack-dollar"></i> Finanzen</a></li>
+                <li><a href="einstellungen.html"><i class="fa-solid fa-gear"></i> Einstellungen</a></li>
+            </ul>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Header -->
+            <header class="header">
+                <div class="search-bar">
+                    <i class="fa-solid fa-search"></i>
+                    <input type="text" placeholder="Suchen...">
+                </div>
+                <div class="user-info">
+                    <!-- Light/Dark Toggle -->
+                    <div class="theme-toggle">
+                        <span class="theme-label" id="theme-label">Light</span>
+                        <div class="toggle-track" id="theme-toggle-btn" role="button" tabindex="0">
+                            <div class="toggle-icons"><span>☀</span><span>🌙</span></div>
+                            <div class="toggle-knob"></div>
+                        </div>
+                    </div>
+
+                    <div class="notification">
+                        <i class="fa-regular fa-bell"></i>
+                        <span class="badge">3</span>
+                    </div>
+                    <div class="profile">
+                        <img src="https://i.pravatar.cc/150?img=11" alt="Profile Picture" class="avatar">
+                        <div class="profile-text">
+                            <span class="name">Max Mustermann</span>
+                            <span class="role">Admin</span>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Dashboard Content -->
+            <div class="content-area">
+                <div class="page-header">
+                    <div>
+                        <h1 class="page-title">Finanzen</h1>
+                        <p class="page-subtitle">Ihre Umsätze, Ausgaben und offene Rechnungen im Überblick.</p>
+                    </div>
+                </div>
+                <div class="cards-grid" style="margin-top: 2rem;">
+                    <div class="card stat-card card-accent-top">
+                        <div class="card-info">
+                            <h3>Einnahmen (MNT)</h3>
+                            <p class="amount">€24,500</p>
+                            <div class="stat-pill ok"><i class="fa-solid fa-arrow-up"></i> <span>+8.4%</span></div>
+                        </div>
+                        <div class="card-icon"><i class="fa-solid fa-hand-holding-dollar text-accent"></i></div>
+                    </div>
+                    <div class="card stat-card card-high-top">
+                        <div class="card-info">
+                            <h3>Ausgaben (MNT)</h3>
+                            <p class="amount">€12,340</p>
+                            <div class="stat-pill danger"><i class="fa-solid fa-arrow-down"></i> <span>-1.2%</span></div>
+                        </div>
+                        <div class="card-icon"><i class="fa-solid fa-file-invoice-dollar text-high"></i></div>
+                    </div>
+                    <div class="card stat-card card-sugg-top">
+                        <div class="card-info">
+                            <h3>Nettogewinn</h3>
+                            <p class="amount">€12,160</p>
+                            <div class="stat-pill sugg"><i class="fa-solid fa-arrow-up"></i> <span>+11.1%</span></div>
+                        </div>
+                        <div class="card-icon"><i class="fa-solid fa-piggy-bank text-sugg"></i></div>
+                    </div>
+                </div>
+                
+                <div class="card table-card" style="margin-top: 2rem;">
+                    <div class="table-header">
+                        <h3>Letzte Rechnungen</h3>
+                        <button class="btn btn-ghost">Rechnung erstellen</button>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Rechnungsnr.</th>
+                                    <th>Kunde</th>
+                                    <th>Ausstelldatum</th>
+                                    <th>Betrag</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="font-mono">#INV-2026-041</td>
+                                    <td>TechCorp GmbH</td>
+                                    <td class="text-muted">22. März 2026</td>
+                                    <td class="font-mono font-medium">€4,500.00</td>
+                                    <td><span class="sys-badge badge-offen">Warten a. Zahlung</span></td>
+                                </tr>
+                                <tr>
+                                    <td class="font-mono">#INV-2026-040</td>
+                                    <td>Alpha Solutions</td>
+                                    <td class="text-muted">15. März 2026</td>
+                                    <td class="font-mono font-medium">€2,100.00</td>
+                                    <td><span class="sys-badge badge-erledigt">Bezahlt</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script src="auth.js"></script>
+    <script src="main.js"></script>
+</body>
+</html>

@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="de" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script>
+    (function() {
+      const savedTheme = localStorage.getItem('theme') || 'light';
+      document.documentElement.setAttribute('data-theme', savedTheme);
+    })();
+  </script>
+  <title>MS Dashboard – Projekte</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist+Mono:wght@400;500;600&family=Geist:wght@400;500;600&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    .projects-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(300px,1fr)); gap:1.5rem; margin-top:2rem; }
+    .project-card { display:flex; flex-direction:column; gap:.75rem; cursor:pointer; transition:transform .15s; }
+    .project-card:hover { transform:translateY(-3px); }
+    .project-card-header { display:flex; justify-content:space-between; align-items:flex-start; }
+    .project-card h3 { font-family:'Instrument Serif',Georgia,serif; font-size:20px; font-style:italic; color:var(--text); }
+    .project-meta { font-family:'Geist Mono',monospace; font-size:11px; color:var(--muted); display:flex; flex-direction:column; gap:4px; }
+    .project-meta span { display:flex; align-items:center; gap:6px; }
+    .status-badge { font-family:'Geist Mono',monospace; font-size:10px; font-weight:600; padding:3px 10px; border-radius:20px; text-transform:uppercase; }
+    .status-draft   { background:var(--mid-bg); color:var(--mid); }
+    .status-active  { background:var(--accent-bg); color:var(--accent); }
+    .status-done    { background:var(--abort-bg); color:var(--abort); }
+    .empty-state { display:flex; flex-direction:column; align-items:center; justify-content:center; min-height:50vh; gap:1rem; text-align:center; }
+    .empty-state i { font-size:3.5rem; color:var(--muted2); }
+    .empty-state h3 { font-family:'Instrument Serif',Georgia,serif; font-size:1.8rem; font-style:italic; }
+    .btn-primary { background:var(--accent); color:#fff; border:none; font-size:14px; padding:12px 28px; border-radius:var(--radius); cursor:pointer; display:inline-flex; align-items:center; gap:8px; font-family:'Geist',sans-serif; font-weight:600; transition:opacity .15s; }
+    .btn-primary:hover { opacity:.88; }
+    .btn-danger { background:var(--high); color:#fff; border:none; font-size:12px; padding:5px 10px; border-radius:var(--radius-sm); cursor:pointer; font-family:'Geist',sans-serif; transition:opacity .15s; }
+    .btn-danger:hover { opacity:.8; }
+    .active-badge { background:var(--doing-bg); color:var(--doing); border:1px solid var(--doing); font-size:10px; font-family:'Geist Mono',monospace; padding:2px 8px; border-radius:20px; }
+  </style>
+</head>
+<body>
+<div class="dashboard-container">
+  <aside class="sidebar">
+    <a href="home.html" class="sidebar-header" style="cursor:pointer">
+      <i class="fa-solid fa-cube logo-icon"></i>
+      <h2>MS Dashboard</h2>
+    </a>
+    <ul class="nav-links">
+      <li><a href="home.html"><i class="fa-solid fa-house"></i> Home</a></li>
+      <li><a href="index.html"><i class="fa-solid fa-chart-pie"></i> Übersicht</a></li>
+      <li class="active"><a href="projekte.html"><i class="fa-solid fa-folder-open"></i> Projekte</a></li>
+      <li><a href="personal.html"><i class="fa-solid fa-users"></i> Personal</a></li>
+      <li><a href="analytik.html"><i class="fa-solid fa-chart-line"></i> Analytik</a></li>
+      <li><a href="finanzen.html"><i class="fa-solid fa-sack-dollar"></i> Finanzen</a></li>
+      <li><a href="einstellungen.html"><i class="fa-solid fa-gear"></i> Einstellungen</a></li>
+    </ul>
+  </aside>
+
+  <main class="main-content">
+    <header class="header">
+      <div class="search-bar">
+        <i class="fa-solid fa-search"></i>
+        <input type="text" placeholder="Suchen...">
+      </div>
+      <div class="user-info">
+        <div class="theme-toggle">
+          <span class="theme-label" id="theme-label">Light</span>
+          <div class="toggle-track" id="theme-toggle-btn">
+            <div class="toggle-icons"><span>☀</span><span>🌙</span></div>
+            <div class="toggle-knob"></div>
+          </div>
+        </div>
+        <div class="notification"><i class="fa-regular fa-bell"></i><span class="badge">3</span></div>
+        <div class="profile">
+          <img src="https://i.pravatar.cc/150?img=11" alt="Avatar" class="avatar">
+          <div class="profile-text"><span class="name">Max Mustermann</span><span class="role">Admin</span></div>
+        </div>
+      </div>
+    </header>
+
+    <div class="content-area">
+      <div class="page-header">
+        <div>
+          <h1 class="page-title">Projekte</h1>
+          <p class="page-subtitle">Alle angelegten Events & Veranstaltungen auf einen Blick.</p>
+        </div>
+        <button class="btn-primary" id="btnNewProject"><i class="fa-solid fa-plus"></i> Neues Projekt</button>
+      </div>
+
+      <div id="projectsGrid" class="projects-grid"></div>
+    </div>
+  </main>
+</div>
+
+<script src="auth.js"></script>
+<script src="main.js"></script>
+<script>
+const activeId = localStorage.getItem('activeProjectId');
+
+async function loadProjects() {
+  const projects = await fetch('/api/projects').then(r=>r.json()).catch(()=>[]);
+  const grid = document.getElementById('projectsGrid');
+  grid.innerHTML = '';
+
+  if (!projects.length) {
+    grid.innerHTML = `<div class="empty-state" style="grid-column:1/-1;">
+      <i class="fa-regular fa-folder-open"></i>
+      <h3>Noch keine Projekte</h3>
+      <p class="text-muted">Klicke auf "Neues Projekt", um loszulegen.</p>
+    </div>`;
+    return;
+  }
+
+  projects.forEach(p => {
+    const isActive = String(p.id) === String(activeId);
+    const statusLabel = p.status === 'draft' ? 'Entwurf' : p.status === 'active' ? 'Aktiv' : 'Abgeschlossen';
+    const statusClass = 'status-' + (p.status === 'draft' ? 'draft' : p.status === 'active' ? 'active' : 'done');
+    const dateStr = p.eventDate ? new Date(p.eventDate).toLocaleDateString('de-DE', {day:'2-digit',month:'short',year:'numeric'}) : '–';
+
+    const card = document.createElement('div');
+    card.className = 'card project-card card-accent-top';
+    card.innerHTML = `
+      <div class="project-card-header">
+        <div style="display:flex;align-items:center;gap:.6rem;flex-wrap:wrap;">
+          <h3>${p.name}</h3>
+          ${isActive ? '<span class="active-badge"><i class="fa-solid fa-bolt"></i> Aktiv</span>' : ''}
+        </div>
+        <span class="status-badge ${statusClass}">${statusLabel}</span>
+      </div>
+      <div class="project-meta">
+        <span><i class="fa-regular fa-user"></i>${p.customer || '–'}</span>
+        <span><i class="fa-regular fa-calendar"></i>${dateStr}</span>
+        <span><i class="fa-solid fa-location-dot"></i>${p.location || '–'}</span>
+        <span><i class="fa-solid fa-people-group"></i>${p.guestCount || '–'} Gäste</span>
+      </div>
+      <div style="display:flex;gap:.75rem;margin-top:.5rem;">
+        <button class="btn-primary btn-open" style="flex:1;justify-content:center;padding:9px;" data-id="${p.id}">
+          ${isActive ? '<i class="fa-solid fa-eye"></i> Anzeigen' : '<i class="fa-solid fa-bolt"></i> Aktivieren'}
+        </button>
+        <button class="btn btn-ghost btn-delete" style="padding:9px 14px;" data-id="${p.id}"><i class="fa-solid fa-trash"></i></button>
+      </div>
+    `;
+    grid.appendChild(card);
+  });
+
+  grid.querySelectorAll('.btn-open').forEach(btn => {
+    btn.addEventListener('click', () => {
+      localStorage.setItem('activeProjectId', btn.getAttribute('data-id'));
+      window.location.href = 'index.html';
+    });
+  });
+  grid.querySelectorAll('.btn-delete').forEach(btn => {
+    btn.addEventListener('click', async (e) => {
+      e.stopPropagation();
+      const id = btn.getAttribute('data-id');
+      if (!confirm('Projekt wirklich löschen?')) return;
+      await fetch('/api/projects/'+id, {method:'DELETE'});
+      if (String(id) === String(activeId)) localStorage.removeItem('activeProjectId');
+      loadProjects();
+    });
+  });
+}
+
+document.getElementById('btnNewProject').addEventListener('click', async () => {
+  const res = await fetch('/api/projects', {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({name:'Neues Projekt'})});
+  const data = await res.json();
+  localStorage.setItem('activeProjectId', data.id);
+  window.location.href = 'index.html';
+});
+
+loadProjects();
+</script>
+</body>
+</html>

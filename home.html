@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="de" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script>
+    (function() {
+      const savedTheme = localStorage.getItem('theme') || 'light';
+      document.documentElement.setAttribute('data-theme', savedTheme);
+    })();
+  </script>
+  <title>MS Dashboard – Home</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist+Mono:wght@400;500;600&family=Geist:wght@400;500;600&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    /* ── Home Specific Styles ── */
+    .home-grid { display: grid; grid-template-columns: 350px 1fr; gap: 1.5rem; margin-top: 1rem; }
+    @media (max-width: 1024px) { .home-grid { grid-template-columns: 1fr; } }
+
+    .profile-card { text-align: center; padding: 2.5rem 1.5rem; }
+    .profile-card .avatar-large { width: 120px; height: 120px; border-radius: 50%; border: 4px solid var(--border); margin-bottom: 1.25rem; object-fit: cover; }
+    .profile-card h2 { font-family: 'Instrument Serif', Georgia, serif; font-size: 1.8rem; margin-bottom: .25rem; }
+    .profile-card .role-badge { display: inline-block; padding: 4px 12px; border-radius: 20px; background: var(--bg2); border: 1px solid var(--border); font-size: 11px; font-family: 'Geist Mono', monospace; text-transform: uppercase; color: var(--muted); margin-bottom: 1rem; }
+    .profile-stats { display: flex; justify-content: space-around; border-top: 1px solid var(--border); padding-top: 1.5rem; margin-top: 1.5rem; }
+    .stat-item { display: flex; flex-direction: column; gap: 2px; }
+    .stat-label { font-size: 10px; font-family: 'Geist Mono', monospace; color: var(--muted); text-transform: uppercase; }
+    .stat-value { font-weight: 600; font-size: 14px; }
+
+    .feed-container { display: flex; flex-direction: column; gap: 1.5rem; }
+    
+    .section-title { display: flex; align-items: center; gap: 10px; margin-bottom: 1.25rem; font-family: 'Instrument Serif', Georgia, serif; font-size: 1.5rem; font-style: italic; }
+    .section-title i { font-size: 1.2rem; color: var(--accent); }
+
+    /* Change Log (Updates) */
+    .update-list { list-style: none; display: flex; flex-direction: column; gap: 1rem; }
+    .update-item { display: flex; gap: 12px; padding-bottom: 1rem; border-bottom: 1px solid var(--border); }
+    .update-item:last-child { border-bottom: none; }
+    .update-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); margin-top: 6px; flex-shrink: 0; box-shadow: 0 0 8px var(--accent); }
+    .update-content { display: flex; flex-direction: column; gap: 2px; }
+    .update-text { font-size: 14px; line-height: 1.5; color: var(--text); }
+    .update-date { font-size: 11px; font-family: 'Geist Mono', monospace; color: var(--muted); }
+
+    /* Announcement System */
+    .announcement-post { margin-bottom: 1.5rem; }
+    .announcement-input-wrap { display: flex; gap: 10px; background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius); padding: 10px; transition: border-color .2s; }
+    .announcement-input-wrap:focus-within { border-color: var(--accent); }
+    .announcement-input-wrap textarea { flex: 1; border: none; background: transparent; color: var(--text); font-family: 'Geist', sans-serif; font-size: 13px; resize: none; padding: 5px; min-height: 40px; outline: none; }
+    .btn-post { background: var(--accent); color: #fff; border: none; border-radius: var(--radius-sm); padding: 0 16px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: opacity .2s; }
+    .btn-post:hover { opacity: .9; }
+
+    .announcement-feed { display: flex; flex-direction: column; gap: 1rem; }
+    .announcement-card { background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.25rem; position: relative; overflow: hidden; animation: fadeUp .3s ease both; }
+    .announcement-card::before { content: ''; position: absolute; left: 0; top: 0; width: 4px; height: 100%; background: var(--accent); }
+    .announcement-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: .75rem; }
+    .announcement-author { display: flex; align-items: center; gap: 8px; }
+    .author-name { font-weight: 600; font-size: 13px; color: var(--text); }
+    .author-role { font-size: 10px; font-family: 'Geist Mono', monospace; color: var(--muted); text-transform: uppercase; background: var(--bg2); padding: 2px 6px; border-radius: 4px; border: 1px solid var(--border); }
+    .announcement-time { font-size: 11px; color: var(--muted); }
+    .announcement-body { font-size: 13.5px; line-height: 1.6; color: var(--text); }
+  </style>
+</head>
+<body>
+<div class="dashboard-container">
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="sidebar-header" onclick="location.href='home.html'" style="cursor:pointer">
+      <i class="fa-solid fa-cube logo-icon"></i>
+      <h2>MS Dashboard</h2>
+    </div>
+    <ul class="nav-links">
+      <li id="nav-home"><a href="home.html"><i class="fa-solid fa-house"></i> Home</a></li>
+      <li><a href="index.html"><i class="fa-solid fa-chart-pie"></i> Übersicht</a></li>
+      <li><a href="projekte.html"><i class="fa-solid fa-folder-open"></i> Projekte</a></li>
+      <li><a href="personal.html"><i class="fa-solid fa-users"></i> Personal</a></li>
+      <li><a href="analytik.html"><i class="fa-solid fa-chart-line"></i> Analytik</a></li>
+      <li><a href="finanzen.html"><i class="fa-solid fa-sack-dollar"></i> Finanzen</a></li>
+      <li><a href="einstellungen.html"><i class="fa-solid fa-gear"></i> Einstellungen</a></li>
+    </ul>
+  </aside>
+
+  <main class="main-content">
+    <header class="header">
+      <div class="search-bar">
+        <i class="fa-solid fa-search"></i>
+        <input type="text" placeholder="Suchen...">
+      </div>
+      <div class="user-info">
+        <div class="theme-toggle">
+          <span class="theme-label" id="theme-label">Light</span>
+          <div class="toggle-track" id="theme-toggle-btn">
+            <div class="toggle-icons"><span>☀</span><span>🌙</span></div>
+            <div class="toggle-knob"></div>
+          </div>
+        </div>
+        <div class="notification"><i class="fa-regular fa-bell"></i><span class="badge">3</span></div>
+        <div class="profile">
+          <img src="https://i.pravatar.cc/150?img=11" alt="Avatar" class="avatar" id="header-avatar">
+          <div class="profile-text"><span class="name" id="header-name">...</span><span class="role" id="header-role">...</span></div>
+        </div>
+      </div>
+    </header>
+
+    <div class="content-area">
+      <div class="home-grid">
+        <!-- Profile Column -->
+        <aside>
+          <div class="card profile-card">
+            <img src="https://i.pravatar.cc/150?img=11" alt="Profile" class="avatar-large" id="profile-avatar">
+            <h2 id="profile-name">...</h2>
+            <div class="role-badge" id="profile-role">...</div>
+            <p id="profile-email" style="font-size: 13px; color: var(--muted); margin-bottom: 2rem;">...</p>
+            
+            <div class="profile-stats">
+              <div class="stat-item">
+                <span class="stat-label">Rang</span>
+                <span class="stat-value" id="profile-rank">--</span>
+              </div>
+              <div class="stat-item">
+                <span class="stat-label">Zugriff</span>
+                <span class="stat-value" id="profile-access">Standard</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="card" style="margin-top: 1.5rem;">
+            <div class="section-title"><i class="fa-solid fa-clock-rotate-left"></i> <span>Neuerungen</span></div>
+            <ul class="update-list" id="update-log">
+              <!-- Updates populate here -->
+            </ul>
+          </div>
+        </aside>
+
+        <!-- Feed Column -->
+        <section class="feed-container">
+          <!-- Announcement Posting (Admin only) -->
+          <div class="card announcement-post" id="post-area" style="display:none;">
+            <div class="section-title"><i class="fa-solid fa-bullhorn"></i> <span>Ankündigung schreiben</span></div>
+            <div class="announcement-input-wrap">
+              <textarea id="announcement-text" placeholder="Teile etwas mit dem Team..."></textarea>
+              <button class="btn-post" id="btn-publish"><i class="fa-solid fa-paper-plane"></i></button>
+            </div>
+            <p style="font-size: 10px; color: var(--muted); margin-top: 8px; font-family: 'Geist Mono', monospace;">Nur für Rang 10 und höher verfügbar.</p>
+          </div>
+
+          <div class="card feed-card">
+            <div class="section-title"><i class="fa-solid fa-newspaper"></i> <span>Ankündigungen</span></div>
+            <div class="announcement-feed" id="announcement-feed">
+              <!-- Announcements populate here -->
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script src="auth.js"></script>
+<script src="main.js"></script>
+<script>
+  // Home-specific init
+  document.addEventListener('DOMContentLoaded', async () => {
+    // Current nav link
+    const navHome = document.getElementById('nav-home');
+    if (navHome) navHome.classList.add('active');
+    
+    // Load data
+    await loadHomeData();
+  });
+
+  async function loadHomeData() {
+    // Fetch current user from session (auth.js handles ms_user)
+    const userJson = localStorage.getItem('ms_user');
+    if (userJson) {
+      const user = JSON.parse(userJson);
+      document.getElementById('profile-name').textContent = user.name;
+      document.getElementById('profile-role').textContent = user.role;
+      document.getElementById('profile-email').textContent = user.email;
+      document.getElementById('profile-avatar').src = user.avatar;
+      document.getElementById('profile-rank').textContent = user.rank || '1';
+      document.getElementById('profile-access').textContent = user.rank >= 10 ? 'Vollzugriff' : 'Eingeschränkt';
+      
+      // Show post area for high ranks
+      if (user.rank >= 10) {
+        document.getElementById('post-area').style.display = 'block';
+      }
+    }
+
+    // Load Updates
+    fetch('/api/updates')
+      .then(r => r.json())
+      .then(data => {
+        const list = document.getElementById('update-log');
+        list.innerHTML = data.map(u => `
+          <li class="update-item">
+            <div class="update-dot"></div>
+            <div class="update-content">
+              <span class="update-text">${u.text}</span>
+              <span class="update-date">${new Date(u.createdAt).toLocaleDateString('de-DE')}</span>
+            </div>
+          </li>
+        `).join('') || '<p style="font-size:12px;color:var(--muted)">Keine neuen Updates.</p>';
+      });
+
+    // Load Announcements
+    loadAnnouncements();
+  }
+
+  async function loadAnnouncements() {
+    const res = await fetch('/api/announcements');
+    const data = await res.json();
+    const feed = document.getElementById('announcement-feed');
+    feed.innerHTML = data.map(a => `
+      <div class="announcement-card">
+        <div class="announcement-header">
+          <div class="announcement-author">
+            <span class="author-name">${a.authorName}</span>
+            <span class="author-role">${a.authorRole}</span>
+          </div>
+          <span class="announcement-time">${formatTime(a.createdAt)}</span>
+        </div>
+        <div class="announcement-body">${a.text}</div>
+      </div>
+    `).join('') || '<p style="text-align:center;color:var(--muted);padding:2rem;">Keine Ankündigungen vorhanden.</p>';
+  }
+
+  function formatTime(iso) {
+    const d = new Date(iso);
+    const now = new Date();
+    const diff = Math.floor((now - d) / 60000); // mins
+    if (diff < 1) return 'Gerade eben';
+    if (diff < 60) return `${diff} Min.`;
+    if (diff < 1440) return `${Math.floor(diff/60)} Std.`;
+    return d.toLocaleDateString('de-DE');
+  }
+
+  document.getElementById('btn-publish').addEventListener('click', async () => {
+    const text = document.getElementById('announcement-text').value.trim();
+    if (!text) return;
+    
+    const token = localStorage.getItem('ms_token');
+    const res = await fetch('/api/announcements', {
+      method: 'POST',
+      headers: { 
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      },
+      body: JSON.stringify({ text })
+    });
+
+    if (res.ok) {
+      document.getElementById('announcement-text').value = '';
+      loadAnnouncements();
+    } else {
+      const err = await res.json();
+      alert(err.error || 'Fehler beim Posten.');
+    }
+  });
+</script>
+</body>
+</html>

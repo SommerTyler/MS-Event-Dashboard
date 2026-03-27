@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="de" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script>
+      (function() {
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+      })();
+    </script>
+    <title>MS Dashboard - Analytik</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com"/>
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist+Mono:wght@400;500;600&family=Geist:wght@400;500;600&display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <a href="home.html" class="sidebar-header" style="cursor:pointer">
+                <i class="fa-solid fa-cube logo-icon"></i>
+                <h2>MS Dashboard</h2>
+            </a>
+            <ul class="nav-links">
+                <li><a href="home.html"><i class="fa-solid fa-house"></i> Home</a></li>
+                <li><a href="index.html"><i class="fa-solid fa-chart-pie"></i> Übersicht</a></li>
+                <li><a href="projekte.html"><i class="fa-solid fa-folder-open"></i> Projekte</a></li>
+                <li><a href="personal.html"><i class="fa-solid fa-users"></i> Personal</a></li>
+                <li class="active"><a href="analytik.html"><i class="fa-solid fa-chart-line"></i> Analytik</a></li>
+                <li><a href="finanzen.html"><i class="fa-solid fa-sack-dollar"></i> Finanzen</a></li>
+                <li><a href="einstellungen.html"><i class="fa-solid fa-gear"></i> Einstellungen</a></li>
+            </ul>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Header -->
+            <header class="header">
+                <div class="search-bar">
+                    <i class="fa-solid fa-search"></i>
+                    <input type="text" placeholder="Suchen...">
+                </div>
+                <div class="user-info">
+                    <!-- Light/Dark Toggle -->
+                    <div class="theme-toggle">
+                        <span class="theme-label" id="theme-label">Light</span>
+                        <div class="toggle-track" id="theme-toggle-btn" role="button" tabindex="0">
+                            <div class="toggle-icons"><span>☀</span><span>🌙</span></div>
+                            <div class="toggle-knob"></div>
+                        </div>
+                    </div>
+
+                    <div class="notification">
+                        <i class="fa-regular fa-bell"></i>
+                        <span class="badge">3</span>
+                    </div>
+                    <div class="profile">
+                        <img src="https://i.pravatar.cc/150?img=11" alt="Profile Picture" class="avatar">
+                        <div class="profile-text">
+                            <span class="name">Max Mustermann</span>
+                            <span class="role">Admin</span>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Dashboard Content -->
+            <div class="content-area">
+                <div class="page-header">
+                    <div>
+                        <h1 class="page-title">Analytik & Berichte</h1>
+                        <p class="page-subtitle">Tiefergehende Einblicke in die Performance und Nutzung.</p>
+                    </div>
+                </div>
+                <div class="charts-grid" style="margin-top: 2rem;">
+                    <div class="card chart-card">
+                        <h3>Seitenaufrufe</h3>
+                        <div class="chart-container">
+                            <canvas id="revenueChart"></canvas>
+                        </div>
+                    </div>
+                    <div class="card chart-card">
+                        <h3>Demografie</h3>
+                        <div class="chart-container">
+                            <canvas id="sourceChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script src="auth.js"></script>
+    <script src="main.js"></script>
+</body>
+</html>

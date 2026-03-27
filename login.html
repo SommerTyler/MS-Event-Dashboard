@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="de" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script>
+    (function() {
+      const savedTheme = localStorage.getItem('theme') || 'light';
+      document.documentElement.setAttribute('data-theme', savedTheme);
+    })();
+  </script>
+  <title>MS Dashboard – Anmelden</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist+Mono:wght@400;500;600&family=Geist:wght@400;500;600&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #faf9f6; --surface: #ffffff; --border: #e8e4de; --border2: #d4cfc8;
+      --text: #1c1917; --muted: #78716c; --muted2: #a8a29e;
+      --accent: #16a34a; --accent-bg: #dcfce7;
+      --high: #dc2626; --high-bg: #fee2e2;
+      --dot: #e0dbd3; --shadow-lg: 0 4px 24px rgba(0,0,0,.08);
+      --radius: 12px; --radius-sm: 8px; --transition: 0.25s ease;
+    }
+    body {
+      background: var(--bg); color: var(--text);
+      font-family: 'Geist', sans-serif; font-size: 14px;
+      min-height: 100vh; display: flex; align-items: center; justify-content: center;
+      overflow: hidden;
+    }
+    /* Animated background dots */
+    body::before {
+      content: ''; position: fixed; inset: 0;
+      background-image: radial-gradient(circle, var(--dot) 1px, transparent 1px);
+      background-size: 24px 24px; opacity: .6; pointer-events: none; z-index: 0;
+    }
+    /* Decorative blobs */
+    .blob {
+      position: fixed; border-radius: 50%; filter: blur(80px); opacity: .18; z-index: 0; pointer-events: none;
+    }
+    .blob-1 { width: 500px; height: 500px; background: #16a34a; top: -150px; left: -100px; }
+    .blob-2 { width: 400px; height: 400px; background: #0284c7; bottom: -100px; right: -80px; }
+
+    .login-shell {
+      position: relative; z-index: 1;
+      display: grid; grid-template-columns: 1fr 1fr; max-width: 900px; width: 100%;
+      background: var(--surface); border: 1px solid var(--border); border-radius: 20px;
+      box-shadow: var(--shadow-lg); overflow: hidden; margin: 1rem;
+    }
+
+    /* Left panel */
+    .login-left {
+      background: linear-gradient(145deg, #052e16, #166534, #0f4f2b);
+      padding: 3rem 2.5rem; display: flex; flex-direction: column; gap: 1.5rem;
+      position: relative; overflow: hidden;
+    }
+    .login-left::before {
+      content: ''; position: absolute; inset: 0;
+      background-image: radial-gradient(circle, rgba(255,255,255,.06) 1px, transparent 1px);
+      background-size: 20px 20px;
+    }
+    .brand { display: flex; align-items: center; gap: .75rem; position: relative; }
+    .brand-icon { font-size: 1.8rem; background: linear-gradient(135deg, #22c55e, #38bdf8); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+    .brand h1 { font-family: 'Instrument Serif', Georgia, serif; font-size: 26px; font-weight: 400; font-style: italic; color: #fff; }
+    .left-tagline { font-family: 'Instrument Serif', Georgia, serif; font-size: 32px; font-style: italic; font-weight: 400; color: #fff; line-height: 1.25; position: relative; margin-top: 2rem; }
+    .left-tagline span { color: #86efac; }
+    .left-sub { font-family: 'Geist Mono', monospace; font-size: 12px; color: rgba(255,255,255,.5); line-height: 1.6; position: relative; }
+    .feature-list { list-style: none; display: flex; flex-direction: column; gap: .75rem; margin-top: auto; position: relative; }
+    .feature-list li { display: flex; align-items: center; gap: .75rem; font-size: 13px; color: rgba(255,255,255,.7); }
+    .feature-list li i { color: #86efac; width: 16px; text-align: center; }
+
+    /* Right panel */
+    .login-right { padding: 3rem 2.5rem; display: flex; flex-direction: column; justify-content: center; gap: 2rem; }
+    .login-right h2 { font-family: 'Instrument Serif', Georgia, serif; font-size: 28px; font-style: italic; color: var(--text); }
+    .login-right p { color: var(--muted); font-size: 13px; margin-top: -.5rem; }
+    .form { display: flex; flex-direction: column; gap: 1.25rem; }
+    .field { display: flex; flex-direction: column; gap: .5rem; }
+    .field label { font-family: 'Geist Mono', monospace; font-size: 11px; text-transform: uppercase; letter-spacing: .05em; color: var(--muted); }
+    .input-wrap { position: relative; }
+    .input-wrap i { position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); color: var(--muted2); font-size: .9rem; pointer-events: none; }
+    .field input {
+      width: 100%; padding: .85rem 1rem .85rem 2.75rem;
+      background: var(--bg); border: 1px solid var(--border);
+      border-radius: var(--radius-sm); color: var(--text);
+      font-family: 'Geist', sans-serif; font-size: 14px; outline: none;
+      transition: border-color var(--transition), box-shadow var(--transition);
+    }
+    .field input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-bg); }
+    .btn-login {
+      background: linear-gradient(135deg, #16a34a, #15803d); color: #fff;
+      border: none; border-radius: var(--radius-sm); padding: 1rem;
+      font-family: 'Geist', sans-serif; font-size: 15px; font-weight: 600;
+      cursor: pointer; display: flex; align-items: center; justify-content: center; gap: .6rem;
+      transition: opacity .15s, transform .15s; box-shadow: 0 4px 14px rgba(22,163,74,.4);
+      margin-top: .25rem;
+    }
+    .btn-login:hover { opacity: .9; transform: translateY(-2px); }
+    .btn-login:disabled { opacity: .6; cursor: not-allowed; transform: none; }
+    .error-msg {
+      background: var(--high-bg); border: 1px solid var(--high); border-radius: var(--radius-sm);
+      padding: .75rem 1rem; font-size: 13px; color: var(--high);
+      display: none; align-items: center; gap: .6rem;
+    }
+    .error-msg.show { display: flex; }
+    .hint-box {
+      background: var(--bg); border: 1px solid var(--border);
+      border-radius: var(--radius-sm); padding: 1rem;
+      font-family: 'Geist Mono', monospace; font-size: 11px; color: var(--muted);
+      line-height: 1.8;
+    }
+    .hint-box strong { color: var(--text); }
+
+    @media (max-width: 640px) {
+      .login-left { display: none; }
+      .login-shell { grid-template-columns: 1fr; max-width: 420px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="blob blob-1"></div>
+  <div class="blob blob-2"></div>
+
+  <div class="login-shell">
+    <!-- Left decorative panel -->
+    <div class="login-left">
+      <div class="brand">
+        <i class="fa-solid fa-cube brand-icon"></i>
+        <h1>MS Dashboard</h1>
+      </div>
+      <p class="left-tagline">Verwalte deine <span>Events & Teams</span> auf einem Blick.</p>
+      <p class="left-sub">Das interne Tool für Projektplanung, Personalverwaltung und Eventkoordination.</p>
+      <ul class="feature-list">
+        <li><i class="fa-solid fa-check"></i> Projekt-Leitfaden & Kundenaufnahme</li>
+        <li><i class="fa-solid fa-check"></i> Automatische To-Do-Generierung</li>
+        <li><i class="fa-solid fa-check"></i> Rollen- & Rechteverwaltung</li>
+        <li><i class="fa-solid fa-check"></i> Zeitstrahl & Deadline-Tracking</li>
+      </ul>
+    </div>
+
+    <!-- Right login form -->
+    <div class="login-right">
+      <div>
+        <h2>Willkommen zurück</h2>
+        <p>Melde dich mit deinen Zugangsdaten an.</p>
+      </div>
+
+      <form class="form" id="loginForm" autocomplete="off">
+        <div class="field">
+          <label>E-Mail Adresse</label>
+          <div class="input-wrap">
+            <i class="fa-regular fa-envelope"></i>
+            <input type="email" id="emailInput" placeholder="name@ms-dashboard.de" required autocomplete="username">
+          </div>
+        </div>
+        <div class="field">
+          <label>Passwort</label>
+          <div class="input-wrap">
+            <i class="fa-solid fa-lock"></i>
+            <input type="password" id="passwordInput" placeholder="••••••••" required autocomplete="current-password">
+          </div>
+        </div>
+
+        <div class="error-msg" id="errorMsg">
+          <i class="fa-solid fa-circle-exclamation"></i>
+          <span id="errorText">Ungültige Zugangsdaten</span>
+        </div>
+
+        <button type="submit" class="btn-login" id="loginBtn">
+          <i class="fa-solid fa-arrow-right-to-bracket"></i> Anmelden
+        </button>
+      </form>
+
+      <div class="hint-box">
+        <strong>Demo-Zugangsdaten:</strong><br>
+        admin@ms-dashboard.de &nbsp;/&nbsp; admin123<br>
+        editor@ms-dashboard.de &nbsp;/&nbsp; editor123<br>
+        viewer@ms-dashboard.de &nbsp;/&nbsp; viewer123
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // If already logged in, redirect
+    const existingToken = localStorage.getItem('ms_token');
+    if (existingToken) {
+      fetch('/api/auth/me', { headers: { 'Authorization': 'Bearer ' + existingToken } })
+        .then(r => r.ok ? window.location.href = 'index.html' : null)
+        .catch(() => null);
+    }
+
+    document.getElementById('loginForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const btn = document.getElementById('loginBtn');
+      const errBox = document.getElementById('errorMsg');
+      const errText = document.getElementById('errorText');
+
+      btn.disabled = true;
+      btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Anmelden...';
+      errBox.classList.remove('show');
+
+      const email = document.getElementById('emailInput').value;
+      const password = document.getElementById('passwordInput').value;
+
+      try {
+        const res = await fetch('/api/auth/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email, password })
+        });
+        const data = await res.json();
+
+        if (!res.ok) {
+          errText.textContent = data.error || 'Anmeldung fehlgeschlagen';
+          errBox.classList.add('show');
+          btn.disabled = false;
+          btn.innerHTML = '<i class="fa-solid fa-arrow-right-to-bracket"></i> Anmelden';
+          return;
+        }
+
+        localStorage.setItem('ms_token', data.token);
+        localStorage.setItem('ms_user', JSON.stringify(data.user));
+        window.location.href = 'index.html';
+      } catch (err) {
+        errText.textContent = 'Server nicht erreichbar. Ist der Server gestartet?';
+        errBox.classList.add('show');
+        btn.disabled = false;
+        btn.innerHTML = '<i class="fa-solid fa-arrow-right-to-bracket"></i> Anmelden';
+      }
+    });
+  </script>
+</body>
+</html>

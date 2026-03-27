@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="de" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script>
+      (function() {
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+      })();
+    </script>
+    <title>MS Dashboard - Personal</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com"/>
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist+Mono:wght@400;500;600&family=Geist:wght@400;500;600&display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <a href="home.html" class="sidebar-header" style="cursor:pointer">
+                <i class="fa-solid fa-cube logo-icon"></i>
+                <h2>MS Dashboard</h2>
+            </a>
+            <ul class="nav-links">
+                <li><a href="home.html"><i class="fa-solid fa-house"></i> Home</a></li>
+                <li><a href="index.html"><i class="fa-solid fa-chart-pie"></i> Übersicht</a></li>
+                <li><a href="projekte.html"><i class="fa-solid fa-folder-open"></i> Projekte</a></li>
+                <li class="active"><a href="personal.html"><i class="fa-solid fa-users"></i> Personal</a></li>
+                <li><a href="analytik.html"><i class="fa-solid fa-chart-line"></i> Analytik</a></li>
+                <li><a href="finanzen.html"><i class="fa-solid fa-sack-dollar"></i> Finanzen</a></li>
+                <li><a href="einstellungen.html"><i class="fa-solid fa-gear"></i> Einstellungen</a></li>
+            </ul>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Header -->
+            <header class="header">
+                <div class="search-bar">
+                    <i class="fa-solid fa-search"></i>
+                    <input type="text" placeholder="Suchen...">
+                </div>
+                <div class="user-info">
+                    <!-- Light/Dark Toggle -->
+                    <div class="theme-toggle">
+                        <span class="theme-label" id="theme-label">Light</span>
+                        <div class="toggle-track" id="theme-toggle-btn" role="button" tabindex="0">
+                            <div class="toggle-icons"><span>☀</span><span>🌙</span></div>
+                            <div class="toggle-knob"></div>
+                        </div>
+                    </div>
+
+                    <div class="notification">
+                        <i class="fa-regular fa-bell"></i>
+                        <span class="badge">3</span>
+                    </div>
+                    <div class="profile">
+                        <img src="https://i.pravatar.cc/150?img=11" alt="Profile Picture" class="avatar">
+                        <div class="profile-text">
+                            <span class="name">Max Mustermann</span>
+                            <span class="role">Admin</span>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Dashboard Content -->
+            <div class="content-area">
+                <div class="page-header">
+                    <div>
+                        <h1 class="page-title">Personalverwaltung</h1>
+                        <p class="page-subtitle">Verwalten Sie Ihre Mitarbeiter, Rollen, Berechtigungen und Gehälter.</p>
+                    </div>
+                </div>
+
+                <!-- Roles Section (Rollenverwaltung) -->
+                <div class="card table-card" style="margin-top: 2rem;">
+                    <div class="table-header">
+                        <h3>Rollenverwaltung</h3>
+                        <button class="btn btn-ghost" id="btnAddRole"><i class="fa-solid fa-plus"></i> Neue Rolle</button>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="data-table" id="rolesTable">
+                            <thead>
+                                <tr>
+                                    <th>Rollenname</th>
+                                    <th>Berechtigungen (Sichtbarkeit & Aktionen)</th>
+                                    <th>Gehalt (Monatlich)</th>
+                                    <th>Aktionen</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="font-medium role-name">Geschäftsleitung</td>
+                                    <td class="role-perms"><span class="sys-badge badge-erledigt" style="margin-bottom: 4px;">Vollzugriff</span><br><span class="text-muted perms-detail" style="font-size: 11px;">Alle Seiten, Strategie, Personal verwalten</span></td>
+                                    <td class="font-mono role-salary">€8,500.00</td>
+                                    <td><button class="btn btn-ghost btn-edit-role" style="padding: 4px 8px;"><i class="fa-solid fa-pen"></i> Bearbeiten</button></td>
+                                </tr>
+                                <tr>
+                                    <td class="font-medium role-name">Stlv. Geschäftsleitung</td>
+                                    <td class="role-perms"><span class="sys-badge badge-erledigt" style="margin-bottom: 4px;">Vollzugriff</span><br><span class="text-muted perms-detail" style="font-size: 11px;">Alle Seiten, Vertretung</span></td>
+                                    <td class="font-mono role-salary">€7,200.00</td>
+                                    <td><button class="btn btn-ghost btn-edit-role" style="padding: 4px 8px;"><i class="fa-solid fa-pen"></i> Bearbeiten</button></td>
+                                </tr>
+                                <tr>
+                                    <td class="font-medium role-name">Sekretär der GL</td>
+                                    <td class="role-perms"><span class="sys-badge badge-offen" style="margin-bottom: 4px;">GL-Zugriff</span><br><span class="text-muted perms-detail" style="font-size: 11px;">Dokumentenmanagement</span></td>
+                                    <td class="font-mono role-salary">€4,500.00</td>
+                                    <td><button class="btn btn-ghost btn-edit-role" style="padding: 4px 8px;"><i class="fa-solid fa-pen"></i> Bearbeiten</button></td>
+                                </tr>
+                                <tr>
+                                    <td class="font-medium role-name">Abteilungsleitung</td>
+                                    <td class="role-perms"><span class="sys-badge badge-erledigt" style="margin-bottom: 4px;">Abteilungszugriff</span><br><span class="text-muted perms-detail" style="font-size: 11px;">Personalplanung</span></td>
+                                    <td class="font-mono role-salary">€5,800.00</td>
+                                    <td><button class="btn btn-ghost btn-edit-role" style="padding: 4px 8px;"><i class="fa-solid fa-pen"></i> Bearbeiten</button></td>
+                                </tr>
+                                <tr>
+                                    <td class="font-medium role-name">Stlv. Abteilungsleitung</td>
+                                    <td class="role-perms"><span class="sys-badge badge-offen" style="margin-bottom: 4px;">Abteilungszugriff</span><br><span class="text-muted perms-detail" style="font-size: 11px;">Vertretung</span></td>
+                                    <td class="font-mono role-salary">€5,100.00</td>
+                                    <td><button class="btn btn-ghost btn-edit-role" style="padding: 4px 8px;"><i class="fa-solid fa-pen"></i> Bearbeiten</button></td>
+                                </tr>
+                                <tr>
+                                    <td class="font-medium role-name">Senior Leitender Angestellter</td>
+                                    <td class="role-perms"><span class="sys-badge badge-offen" style="margin-bottom: 4px;">Teamleitung</span><br><span class="text-muted perms-detail" style="font-size: 11px;">Projektmanagement</span></td>
+                                    <td class="font-mono role-salary">€4,800.00</td>
+                                    <td><button class="btn btn-ghost btn-edit-role" style="padding: 4px 8px;"><i class="fa-solid fa-pen"></i> Bearbeiten</button></td>
+                                </tr>
+                                <tr>
+                                    <td class="font-medium role-name">Leitender Angestellter</td>
+                                    <td class="role-perms"><span class="sys-badge badge-offen" style="margin-bottom: 4px;">Teamleitung</span><br><span class="text-muted perms-detail" style="font-size: 11px;">Fachverantwortung</span></td>
+                                    <td class="font-mono role-salary">€4,200.00</td>
+                                    <td><button class="btn btn-ghost btn-edit-role" style="padding: 4px 8px;"><i class="fa-solid fa-pen"></i> Bearbeiten</button></td>
+                                </tr>
+                                <tr>
+                                    <td class="font-medium role-name">Junior Leitender Angestellter</td>
+                                    <td class="role-perms"><span class="sys-badge badge-abgebrochen" style="margin-bottom: 4px;">Eingeschränkt</span><br><span class="text-muted perms-detail" style="font-size: 11px;">Assistenz Teamleitung, Einarbeitung</span></td>
+                                    <td class="font-mono role-salary">€3,600.00</td>
+                                    <td><button class="btn btn-ghost btn-edit-role" style="padding: 4px 8px;"><i class="fa-solid fa-pen"></i> Bearbeiten</button></td>
+                                </tr>
+                                <tr>
+                                    <td class="font-medium role-name">Senior Angestellter</td>
+                                    <td class="role-perms"><span class="sys-badge badge-erledigt" style="margin-bottom: 4px;">Spezialist</span><br><span class="text-muted perms-detail" style="font-size: 11px;">Eigenverantwortung</span></td>
+                                    <td class="font-mono role-salary">€3,800.00</td>
+                                    <td><button class="btn btn-ghost btn-edit-role" style="padding: 4px 8px;"><i class="fa-solid fa-pen"></i> Bearbeiten</button></td>
+                                </tr>
+                                <tr>
+                                    <td class="font-medium role-name">Junior Angestellter</td>
+                                    <td class="role-perms"><span class="sys-badge badge-offen" style="margin-bottom: 4px;">Angestellter</span><br><span class="text-muted perms-detail" style="font-size: 11px;">Fachkraft, Unterstützung</span></td>
+                                    <td class="font-mono role-salary">€2,800.00</td>
+                                    <td><button class="btn btn-ghost btn-edit-role" style="padding: 4px 8px;"><i class="fa-solid fa-pen"></i> Bearbeiten</button></td>
+                                </tr>
+                                <tr>
+                                    <td class="font-medium role-name">Auszubildender</td>
+                                    <td class="role-perms"><span class="sys-badge badge-abgebrochen" style="margin-bottom: 4px;">Ausbildung</span><br><span class="text-muted perms-detail" style="font-size: 11px;">Unterstützung</span></td>
+                                    <td class="font-mono role-salary">€1,100.00</td>
+                                    <td><button class="btn btn-ghost btn-edit-role" style="padding: 4px 8px;"><i class="fa-solid fa-pen"></i> Bearbeiten</button></td>
+                                </tr>
+                                <tr>
+                                    <td class="font-medium role-name">Praktikant</td>
+                                    <td class="role-perms"><span class="sys-badge badge-abgebrochen" style="margin-bottom: 4px;">Einarbeitung</span><br><span class="text-muted perms-detail" style="font-size: 11px;">Unterstützung</span></td>
+                                    <td class="font-mono role-salary">€800.00</td>
+                                    <td><button class="btn btn-ghost btn-edit-role" style="padding: 4px 8px;"><i class="fa-solid fa-pen"></i> Bearbeiten</button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Employees Section -->
+                <div class="card table-card" style="margin-top: 2rem;">
+                    <div class="table-header">
+                        <h3>Alle Mitarbeiter</h3>
+                        <button class="btn btn-ghost" id="btnAddEmployee"><i class="fa-solid fa-plus"></i> Neuer Mitarbeiter</button>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="data-table" id="employeesTable">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Rolle</th>
+                                    <th>Zuletzt aktiv</th>
+                                    <th>Status</th>
+                                    <th>Aktionen</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <div class="customer-cell">
+                                            <img src="https://i.pravatar.cc/150?img=11" alt="Avatar">
+                                            <span class="emp-name">Max Mustermann</span>
+                                        </div>
+                                    </td>
+                                    <td class="text-muted emp-role">Admin</td>
+                                    <td class="text-muted">Gerade eben</td>
+                                    <td class="emp-status"><span class="sys-badge badge-erledigt">Aktiv</span></td>
+                                    <td><button class="btn btn-ghost btn-edit-emp" style="padding: 4px 8px;"><i class="fa-solid fa-pen"></i></button></td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="customer-cell">
+                                            <img src="https://i.pravatar.cc/150?img=33" alt="Avatar">
+                                            <span class="emp-name">Anna Meier</span>
+                                        </div>
+                                    </td>
+                                    <td class="text-muted emp-role">Editor</td>
+                                    <td class="text-muted">Gestern, 14:30</td>
+                                    <td class="emp-status"><span class="sys-badge badge-erledigt">Aktiv</span></td>
+                                    <td><button class="btn btn-ghost btn-edit-emp" style="padding: 4px 8px;"><i class="fa-solid fa-pen"></i></button></td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="customer-cell">
+                                            <img src="https://i.pravatar.cc/150?img=5" alt="Avatar">
+                                            <span class="emp-name">Sarah Schmidt</span>
+                                        </div>
+                                    </td>
+                                    <td class="text-muted emp-role">Viewer</td>
+                                    <td class="text-muted">Vor 3 Tagen</td>
+                                    <td class="emp-status"><span class="sys-badge badge-abgebrochen">Inaktiv</span></td>
+                                    <td><button class="btn btn-ghost btn-edit-emp" style="padding: 4px 8px;"><i class="fa-solid fa-pen"></i></button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Modals -->
+    <div class="modal-backdrop" id="employeeModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 id="employeeModalTitle">Neuer Mitarbeiter</h3>
+                <button class="modal-close" id="closeEmployeeModal"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="editEmployeeIndex" value="-1">
+                <div class="modal-group">
+                    <label>Vorname & Nachname</label>
+                    <input type="text" id="employeeNameInput" placeholder="Max Mustermann">
+                </div>
+                <div class="modal-group">
+                    <label>Rolle</label>
+                    <select id="employeeRoleInput">
+                        <option>Admin</option>
+                        <option>Editor</option>
+                        <option>Viewer</option>
+                    </select>
+                </div>
+                <div class="modal-group">
+                    <label>Status</label>
+                    <select id="employeeStatusInput">
+                        <option>Aktiv</option>
+                        <option>Inaktiv</option>
+                    </select>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-ghost" id="cancelEmployeeModal">Abbrechen</button>
+                    <button class="btn" style="background: var(--accent); color: white; border: none;" id="saveEmployeeBtn">Speichern</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-backdrop" id="roleModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 id="roleModalTitle">Neue Rolle</h3>
+                <button class="modal-close" id="closeRoleModal"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="editRoleIndex" value="-1">
+                <div class="modal-group">
+                    <label>Rollenname</label>
+                    <input type="text" id="roleNameInput" placeholder="z. B. Manager">
+                </div>
+                <div class="modal-group">
+                    <label>Berechtigungen</label>
+                    <input type="text" id="rolePermsInput" placeholder="z. B. Alle Seiten ansehen">
+                </div>
+                <div class="modal-group">
+                    <label>Gehalt (€ pro Monat)</label>
+                    <input type="text" id="roleSalaryInput" placeholder="z. B. 4500">
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-ghost" id="cancelRoleModal">Abbrechen</button>
+                    <button class="btn" style="background: var(--accent); color: white; border: none;" id="saveRoleBtn">Speichern</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="auth.js"></script>
+    <script src="main.js"></script>
+</body>
+</html>
