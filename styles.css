@@ -1,45 +1,68 @@
-/* ═══════════════════════════════════════════════════════════
-   MS DASHBOARD — THE "IMAGE 2" CLONE (OFFICIAL)
-   Anleitung: Diese Datei KOMPLETT kopieren und ALLES in deiner
-   style.css damit überschreiben.
-   ═══════════════════════════════════════════════════════════ */
+/* ═══════════════════════════════════════════════
+   MS DASHBOARD — VISION GLASS UI (FINAL)
+   Copy-Paste Ready
+   ═══════════════════════════════════════════════ */
 
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
-:root {
-  /* --- LIGHT MODE (EXACT IMAGE 2 COLORS) --- */
-  --bg-main: #f0f2f8;
-  --glass-bg: rgba(255, 255, 255, 0.45);
-  --glass-border: rgba(255, 255, 255, 0.8);
+/* ─────────────────────────────
+   LIGHT MODE
+───────────────────────────── */
+:root,
+[data-theme="light"] {
 
-  /* Die Regenbogen-Glow-Farben */
-  --glow-purple: rgba(180, 150, 255, 0.4);
-  --glow-blue: rgba(150, 200, 255, 0.4);
-  --glow-pink: rgba(255, 170, 220, 0.3);
+  --page-bg: #f4f1fb;
 
-  --text-main: #1c1e26;
-  --text-muted: #5e6278;
+  /* Aurora */
+  --aurora-1: rgba(195, 160, 255, 0.45);
+  --aurora-2: rgba(255, 180, 220, 0.35);
+  --aurora-3: rgba(150, 220, 255, 0.30);
+  --aurora-4: rgba(180, 255, 210, 0.30);
 
-  --btn-green: #006b44;
-  --btn-green-hover: #008f5d;
+  /* Glass */
+  --glass: rgba(255, 255, 255, 0.65);
+  --glass-strong: rgba(255, 255, 255, 0.78);
+  --border: rgba(255, 255, 255, 0.45);
 
-  --blur-val: 40px;
-  --saturate-val: 180%;
+  --blur: 50px;
+  --blur-strong: 70px;
+
+  /* Text */
+  --text: #1c1830;
+  --muted: #7a7695;
+
+  /* Accent */
+  --accent: #1b7a4e;
 }
 
-/* --- DARK MODE (GLASS ADAPTION) --- */
+/* ─────────────────────────────
+   DARK MODE
+───────────────────────────── */
 [data-theme="dark"] {
-  --bg-main: #0a0c14;
-  --glass-bg: rgba(20, 25, 40, 0.7);
-  --glass-border: rgba(255, 255, 255, 0.1);
-  --text-main: #f1f1f4;
-  --text-muted: #92929f;
-  --btn-green: #34d399;
+
+  --page-bg: #0c0a18;
+
+  --aurora-1: rgba(120, 80, 255, 0.25);
+  --aurora-2: rgba(255, 80, 160, 0.20);
+  --aurora-3: rgba(80, 160, 255, 0.20);
+  --aurora-4: rgba(80, 255, 200, 0.20);
+
+  --glass: rgba(20, 15, 38, 0.80);
+  --glass-strong: rgba(30, 22, 55, 0.90);
+  --border: rgba(255, 255, 255, 0.08);
+
+  --blur: 60px;
+  --blur-strong: 80px;
+
+  --text: #eeeaff;
+  --muted: #8c88b0;
+
+  --accent: #34d399;
 }
 
-/* ──────────────────────────────────────────────
-   BASE SETUP (Löscht das alte dunkle Design)
-────────────────────────────────────────────── */
+/* ─────────────────────────────
+   BASE
+───────────────────────────── */
 * {
   margin: 0;
   padding: 0;
@@ -47,163 +70,221 @@
 }
 
 body {
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  background: var(--bg-main);
-  color: var(--text-main);
+  font-family: 'Inter', sans-serif;
+  background: var(--page-bg);
+  color: var(--text);
   min-height: 100vh;
   overflow-x: hidden;
-  position: relative;
-  display: flex;
 }
 
-/* ──────────────────────────────────────────────
-   AURORA BACKGROUND (Erzeugt die bunten Flecken)
-────────────────────────────────────────────── */
-body::before,
+/* ─────────────────────────────
+   AURORA BACKGROUND
+───────────────────────────── */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+
+  background:
+    radial-gradient(circle at 20% 30%, var(--aurora-1), transparent 60%),
+    radial-gradient(circle at 80% 60%, var(--aurora-2), transparent 60%),
+    radial-gradient(circle at 60% 10%, var(--aurora-3), transparent 60%),
+    radial-gradient(circle at 30% 80%, var(--aurora-4), transparent 60%);
+
+  filter: blur(40px);
+}
+
+/* Soft center glow */
 body::after {
   content: '';
   position: fixed;
-  width: 800px;
-  height: 800px;
-  border-radius: 50%;
-  z-index: -1;
-  filter: blur(120px);
-  opacity: 0.6;
-  animation: moveAurora 25s infinite alternate ease-in-out;
+  inset: 0;
+  background: radial-gradient(circle at center,
+      rgba(255, 255, 255, 0.7),
+      transparent 70%);
+  z-index: 0;
 }
 
-body::before {
-  background: radial-gradient(circle, var(--glow-purple) 0%, transparent 70%);
-  top: -20%;
-  left: -10%;
-}
-
-body::after {
-  background: radial-gradient(circle, var(--glow-blue) 0%, transparent 70%);
-  bottom: -20%;
-  right: -10%;
-  animation-delay: -7s;
-}
-
-@keyframes moveAurora {
-  0% {
-    transform: translate(0, 0) scale(1);
-  }
-
-  100% {
-    transform: translate(10%, 15%) scale(1.1);
-  }
-}
-
-/* ──────────────────────────────────────────────
-   DASHBOARD LAYOUT
-────────────────────────────────────────────── */
-.dashboard-container {
+/* ─────────────────────────────
+   LAYOUT
+───────────────────────────── */
+.dashboard {
   display: flex;
-  width: 100%;
-  padding: 24px;
-  gap: 24px;
+  min-height: 100vh;
+  position: relative;
+  z-index: 1;
 }
 
-/* SIDEBAR (Das schmale Glas-Panel links) */
+/* ─────────────────────────────
+   SIDEBAR
+───────────────────────────── */
 .sidebar {
-  width: 260px;
-  background: var(--glass-bg);
-  backdrop-filter: blur(var(--blur-val)) var(--saturate-val);
-  -webkit-backdrop-filter: blur(var(--blur-val)) var(--saturate-val);
-  border: 1px solid var(--glass-border);
-  border-radius: 30px;
-  padding: 40px 20px;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.02);
+  width: 220px;
+  padding: 1.5rem;
+
+  background: rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(var(--blur));
+  border-right: 1px solid var(--border);
 }
 
-.nav-link {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 14px 20px;
-  color: var(--text-muted);
-  text-decoration: none;
-  border-radius: 16px;
-  transition: 0.3s;
-  font-size: 14px;
-  font-weight: 500;
-}
-
-.nav-link.active,
-.nav-link:hover {
-  background: rgba(255, 255, 255, 0.6);
-  color: var(--text-main);
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
-}
-
-/* MAIN CONTENT AREA */
-.main-content {
+/* ─────────────────────────────
+   MAIN
+───────────────────────────── */
+.main {
   flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 24px;
 }
 
-/* DIE ZENTRALE CARD (Das Herzstück von Bild 2) */
-.glass-card {
-  background: var(--glass-bg);
-  backdrop-filter: blur(var(--blur-val)) var(--saturate-val);
-  -webkit-backdrop-filter: blur(var(--blur-val)) var(--saturate-val);
-  border: 1px solid var(--glass-border);
-  border-radius: 35px;
-  padding: 60px 40px;
-  text-align: center;
-  position: relative;
-  margin: auto;
-  max-width: 600px;
-  /* Der Holographic-Shadow Stack */
-  box-shadow:
-    0 30px 60px rgba(0, 0, 0, 0.05),
-    0 0 40px var(--glow-purple),
-    0 0 80px var(--glow-blue),
-    inset 0 1px 1px rgba(255, 255, 255, 1);
-}
-
-/* Der grüne Button */
-.btn-primary {
-  background: linear-gradient(135deg, var(--btn-green) 0%, var(--btn-green-hover) 100%);
-  color: white;
-  border: none;
-  padding: 16px 36px;
-  border-radius: 20px;
-  font-weight: 600;
-  cursor: pointer;
-  box-shadow: 0 12px 24px rgba(0, 107, 68, 0.3);
-  transition: 0.3s;
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  margin-top: 20px;
-}
-
-.btn-primary:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 18px 30px rgba(0, 107, 68, 0.4);
-}
-
-/* --- HEADER / SEARCH --- */
-.header-bar {
-  width: 100%;
+/* HEADER */
+.header {
+  height: 60px;
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  background: var(--glass-bg);
-  backdrop-filter: blur(20px);
-  border: 1px solid var(--glass-border);
-  border-radius: 20px;
-  padding: 10px 25px;
+  justify-content: space-between;
+  padding: 0 2rem;
+
+  background: rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(var(--blur));
+  border-bottom: 1px solid var(--border);
 }
 
-.search-input {
-  background: transparent;
+/* SEARCH */
+.search {
+  background: rgba(255, 255, 255, 0.55);
+  padding: 8px 16px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+
+  backdrop-filter: blur(20px);
+
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.7),
+    0 4px 20px rgba(0, 0, 0, 0.05);
+}
+
+/* ─────────────────────────────
+   CENTER HERO (WICHTIG)
+───────────────────────────── */
+.center {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ─────────────────────────────
+   GLASS CARD
+───────────────────────────── */
+.card {
+  width: 420px;
+  text-align: center;
+
+  padding: 2.5rem;
+
+  border-radius: 26px;
+  border: 1px solid var(--border);
+
+  background: var(--glass);
+  backdrop-filter: blur(var(--blur-strong)) saturate(200%);
+
+  box-shadow:
+    0 25px 80px rgba(180, 155, 240, 0.25),
+    0 10px 30px rgba(0, 0, 0, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+
+  position: relative;
+  overflow: hidden;
+
+  animation: float 6s ease-in-out infinite;
+}
+
+/* Glow Overlay */
+.card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+
+  background: linear-gradient(135deg,
+      rgba(255, 200, 255, 0.18),
+      rgba(150, 220, 255, 0.12),
+      rgba(200, 255, 220, 0.12));
+
+  opacity: 0.6;
+}
+
+/* Light line */
+.card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 10%;
+  right: 10%;
+  height: 1px;
+
+  background: linear-gradient(90deg,
+      transparent,
+      rgba(255, 255, 255, 0.9),
+      transparent);
+}
+
+/* ─────────────────────────────
+   BUTTON
+───────────────────────────── */
+.btn {
+  margin-top: 1.5rem;
+
+  padding: 10px 18px;
+  border-radius: 999px;
   border: none;
-  outline: none;
-  color: var(--text-main);
-  width: 250px;
+
+  background: linear-gradient(135deg, #1b7a4e, #25a06a);
+  color: white;
+
+  cursor: pointer;
+
+  box-shadow:
+    0 6px 20px rgba(27, 122, 78, 0.35),
+    inset 0 1px 0 rgba(255, 255, 255, 0.25);
+
+  transition: 0.25s;
+}
+
+.btn:hover {
+  transform: translateY(-2px) scale(1.03);
+
+  box-shadow:
+    0 10px 30px rgba(27, 122, 78, 0.45),
+    0 0 20px rgba(27, 122, 78, 0.25);
+}
+
+/* ─────────────────────────────
+   TEXT
+───────────────────────────── */
+.card h2 {
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+.card p {
+  font-size: 13px;
+  color: var(--muted);
+}
+
+/* ─────────────────────────────
+   FLOAT ANIMATION
+───────────────────────────── */
+@keyframes float {
+  0% {
+    transform: translateY(0px);
+  }
+
+  50% {
+    transform: translateY(-8px);
+  }
+
+  100% {
+    transform: translateY(0px);
+  }
 }
