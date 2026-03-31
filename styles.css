@@ -1,215 +1,209 @@
 /* ═══════════════════════════════════════════════════════════
-   MS DASHBOARD — THE "IMAGE 2" REPRODUCTION (ULTIMATE EDITION)
-   Focus: Prism Glow, Aurora Background, Liquid Glass
+   MS DASHBOARD — THE "IMAGE 2" CLONE (OFFICIAL)
+   Anleitung: Diese Datei KOMPLETT kopieren und ALLES in deiner
+   style.css damit überschreiben.
    ═══════════════════════════════════════════════════════════ */
 
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap');
 
 :root {
-  /* --- COLOR PALETTE (Exact match to the bright holographic look) --- */
-  --bg-main: #f4f7ff;
-  --glass-white: rgba(255, 255, 255, 0.45);
+  /* --- LIGHT MODE (EXACT IMAGE 2 COLORS) --- */
+  --bg-main: #f0f2f8;
+  --glass-bg: rgba(255, 255, 255, 0.45);
   --glass-border: rgba(255, 255, 255, 0.8);
 
-  /* Holographic Accents */
-  --prism-purple: rgba(190, 160, 255, 0.5);
-  --prism-blue: rgba(160, 210, 255, 0.5);
-  --prism-pink: rgba(255, 180, 220, 0.4);
+  /* Die Regenbogen-Glow-Farben */
+  --glow-purple: rgba(180, 150, 255, 0.4);
+  --glow-blue: rgba(150, 200, 255, 0.4);
+  --glow-pink: rgba(255, 170, 220, 0.3);
 
-  /* Content Colors */
-  --text-deep: #1a1c2d;
-  --text-soft: #5a5d7a;
-  --accent-green: #006b44;
-  --accent-green-glow: rgba(0, 107, 68, 0.3);
+  --text-main: #1c1e26;
+  --text-muted: #5e6278;
 
-  /* Animation & Glass */
-  --blur: 45px;
-  --sat: saturate(190%);
+  --btn-green: #006b44;
+  --btn-green-hover: #008f5d;
+
+  --blur-val: 40px;
+  --saturate-val: 180%;
 }
 
-/* ──────────────────────────────────────────────
-   DARK MODE OVERRIDE
-────────────────────────────────────────────── */
+/* --- DARK MODE (GLASS ADAPTION) --- */
 [data-theme="dark"] {
-  --bg-main: #080a12;
-  --glass-white: rgba(15, 20, 35, 0.7);
-  --glass-border: rgba(255, 255, 255, 0.12);
-  --text-deep: #f0f2faff;
-  --text-soft: #9da2c0;
-  --accent-green: #34d399;
+  --bg-main: #0a0c14;
+  --glass-bg: rgba(20, 25, 40, 0.7);
+  --glass-border: rgba(255, 255, 255, 0.1);
+  --text-main: #f1f1f4;
+  --text-muted: #92929f;
+  --btn-green: #34d399;
 }
 
 /* ──────────────────────────────────────────────
-   DYNAMISCHER AURORA-HINTERGRUND (Wichtig für den Effekt!)
+   BASE SETUP (Löscht das alte dunkle Design)
 ────────────────────────────────────────────── */
-body {
+* {
   margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
   font-family: 'Plus Jakarta Sans', sans-serif;
-  background-color: var(--bg-main);
-  color: var(--text-deep);
+  background: var(--bg-main);
+  color: var(--text-main);
   min-height: 100vh;
   overflow-x: hidden;
   position: relative;
+  display: flex;
 }
 
-/* Die "Lava-Lampen" Blobs im Hintergrund */
+/* ──────────────────────────────────────────────
+   AURORA BACKGROUND (Erzeugt die bunten Flecken)
+────────────────────────────────────────────── */
 body::before,
 body::after {
   content: '';
   position: fixed;
-  width: 600px;
-  height: 600px;
+  width: 800px;
+  height: 800px;
   border-radius: 50%;
   z-index: -1;
-  filter: blur(100px);
-  animation: auroraFlow 20s infinite alternate ease-in-out;
+  filter: blur(120px);
+  opacity: 0.6;
+  animation: moveAurora 25s infinite alternate ease-in-out;
 }
 
 body::before {
-  background: radial-gradient(circle, var(--prism-purple) 0%, transparent 70%);
-  top: -10%;
+  background: radial-gradient(circle, var(--glow-purple) 0%, transparent 70%);
+  top: -20%;
   left: -10%;
 }
 
 body::after {
-  background: radial-gradient(circle, var(--prism-blue) 0%, transparent 70%);
-  bottom: -10%;
+  background: radial-gradient(circle, var(--glow-blue) 0%, transparent 70%);
+  bottom: -20%;
   right: -10%;
-  animation-delay: -5s;
+  animation-delay: -7s;
 }
 
-@keyframes auroraFlow {
+@keyframes moveAurora {
   0% {
     transform: translate(0, 0) scale(1);
   }
 
   100% {
-    transform: translate(15%, 15%) scale(1.2);
+    transform: translate(10%, 15%) scale(1.1);
   }
 }
 
 /* ──────────────────────────────────────────────
-   LAYOUT STRUCTURE
+   DASHBOARD LAYOUT
 ────────────────────────────────────────────── */
 .dashboard-container {
   display: flex;
-  min-height: 100vh;
-  padding: 20px;
-  gap: 20px;
+  width: 100%;
+  padding: 24px;
+  gap: 24px;
 }
 
-/* ──────────────────────────────────────────────
-   SIDEBAR (Liquid Style)
-────────────────────────────────────────────── */
+/* SIDEBAR (Das schmale Glas-Panel links) */
 .sidebar {
   width: 260px;
-  background: var(--glass-white);
-  backdrop-filter: blur(var(--blur)) var(--sat);
-  -webkit-backdrop-filter: blur(var(--blur)) var(--sat);
+  background: var(--glass-bg);
+  backdrop-filter: blur(var(--blur-val)) var(--saturate-val);
+  -webkit-backdrop-filter: blur(var(--blur-val)) var(--saturate-val);
   border: 1px solid var(--glass-border);
-  border-radius: 28px;
-  padding: 30px 20px;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.03);
+  border-radius: 30px;
+  padding: 40px 20px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.02);
 }
 
-.nav-item {
+.nav-link {
   display: flex;
   align-items: center;
   gap: 12px;
-  padding: 14px 18px;
-  border-radius: 16px;
-  color: var(--text-soft);
+  padding: 14px 20px;
+  color: var(--text-muted);
   text-decoration: none;
-  transition: all 0.3s;
-  margin-bottom: 5px;
+  border-radius: 16px;
+  transition: 0.3s;
+  font-size: 14px;
+  font-weight: 500;
 }
 
-.nav-item:hover,
-.nav-item.active {
-  background: rgba(255, 255, 255, 0.5);
-  color: var(--text-deep);
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.02);
+.nav-link.active,
+.nav-link:hover {
+  background: rgba(255, 255, 255, 0.6);
+  color: var(--text-main);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
 }
 
-/* ──────────────────────────────────────────────
-   MAIN CARDS (The Prismatic Glow)
-────────────────────────────────────────────── */
+/* MAIN CONTENT AREA */
 .main-content {
   flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 24px;
 }
 
-.card {
-  background: var(--glass-white);
-  backdrop-filter: blur(var(--blur)) var(--sat);
-  -webkit-backdrop-filter: blur(var(--blur)) var(--sat);
+/* DIE ZENTRALE CARD (Das Herzstück von Bild 2) */
+.glass-card {
+  background: var(--glass-bg);
+  backdrop-filter: blur(var(--blur-val)) var(--saturate-val);
+  -webkit-backdrop-filter: blur(var(--blur-val)) var(--saturate-val);
   border: 1px solid var(--glass-border);
-  border-radius: 32px;
-  padding: 40px;
+  border-radius: 35px;
+  padding: 60px 40px;
+  text-align: center;
   position: relative;
-  overflow: hidden;
-  /* Der magische Multi-Layer Shadow aus dem Bild */
+  margin: auto;
+  max-width: 600px;
+  /* Der Holographic-Shadow Stack */
   box-shadow:
-    0 20px 50px rgba(0, 0, 0, 0.04),
-    0 0 30px var(--prism-purple),
-    0 0 60px var(--prism-blue),
-    inset 0 1px 1px rgba(255, 255, 255, 0.9);
+    0 30px 60px rgba(0, 0, 0, 0.05),
+    0 0 40px var(--glow-purple),
+    0 0 80px var(--glow-blue),
+    inset 0 1px 1px rgba(255, 255, 255, 1);
 }
 
-/* Subtiler Glow-Punkt in der Karte */
-.card::after {
-  content: '';
-  position: absolute;
-  top: -50%;
-  right: -50%;
-  width: 300px;
-  height: 300px;
-  background: radial-gradient(circle, var(--prism-pink) 0%, transparent 70%);
-  opacity: 0.3;
-  pointer-events: none;
-}
-
-h1,
-h2,
-h3 {
-  letter-spacing: -0.03em;
-  font-weight: 700;
-}
-
-/* ──────────────────────────────────────────────
-   THE GREEN BUTTON (Exact Match)
-────────────────────────────────────────────── */
+/* Der grüne Button */
 .btn-primary {
-  background: linear-gradient(135deg, #006b44 0%, #008f5d 100%);
+  background: linear-gradient(135deg, var(--btn-green) 0%, var(--btn-green-hover) 100%);
   color: white;
   border: none;
-  padding: 14px 32px;
-  border-radius: 18px;
+  padding: 16px 36px;
+  border-radius: 20px;
   font-weight: 600;
   cursor: pointer;
-  box-shadow: 0 10px 25px var(--accent-green-glow);
-  transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 12px 24px rgba(0, 107, 68, 0.3);
+  transition: 0.3s;
   display: inline-flex;
   align-items: center;
   gap: 10px;
+  margin-top: 20px;
 }
 
 .btn-primary:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 15px 35px var(--accent-green-glow);
+  transform: translateY(-3px);
+  box-shadow: 0 18px 30px rgba(0, 107, 68, 0.4);
 }
 
-/* ──────────────────────────────────────────────
-   UTILITIES
-────────────────────────────────────────────── */
-.text-soft {
-  color: var(--text-soft);
+/* --- HEADER / SEARCH --- */
+.header-bar {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--glass-bg);
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--glass-border);
+  border-radius: 20px;
+  padding: 10px 25px;
 }
 
-.grid-3 {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 20px;
+.search-input {
+  background: transparent;
+  border: none;
+  outline: none;
+  color: var(--text-main);
+  width: 250px;
 }
