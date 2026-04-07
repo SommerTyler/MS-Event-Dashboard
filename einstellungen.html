@@ -20,7 +20,7 @@
     <div class="dashboard-container">
         <!-- Sidebar -->
         <aside class="sidebar">
-            <a href="home.html" class="sidebar-header" style="cursor:pointer">
+            <a href="home.html" class="sidebar-header u-clickable">
                 <i class="fa-solid fa-cube logo-icon"></i>
                 <h2>MS Dashboard</h2>
             </a>
@@ -75,30 +75,30 @@
                         <p class="page-subtitle">Passen Sie das Dashboard an Ihre Bedürfnisse an.</p>
                     </div>
                 </div>
-                <div class="card" style="margin-top: 2rem; max-width: 600px;">
-                    <h3 style="font-family: 'Instrument Serif', Georgia, serif; font-size: 24px; font-style: italic; margin-bottom: 1.5rem; color: var(--text);">Profil bearbeiten</h3>
+                <div class="card table-card settings-card">
+                    <h3 class="settings-title">Profil bearbeiten</h3>
                     
-                    <div style="display: flex; flex-direction: column; gap: 1.5rem;">
-                        <div style="display: flex; flex-direction: column; gap: 0.5rem;">
-                            <label style="font-family: 'Geist Mono', monospace; font-size: 11px; text-transform: uppercase; color: var(--muted);">Vorname & Nachname</label>
-                            <input type="text" value="Max Mustermann" style="background: var(--bg); border: 1px solid var(--border); color: var(--text); padding: 0.75rem 1rem; border-radius: var(--radius-sm); font-family: 'Geist', sans-serif; font-size: 14px; outline: none;">
+                    <div class="settings-form">
+                        <div class="settings-group">
+                            <label class="settings-label">Vorname & Nachname</label>
+                            <input type="text" value="Max Mustermann" class="settings-input">
                         </div>
                         
-                        <div style="display: flex; flex-direction: column; gap: 0.5rem;">
-                            <label style="font-family: 'Geist Mono', monospace; font-size: 11px; text-transform: uppercase; color: var(--muted);">E-Mail Adresse</label>
-                            <input type="email" value="max.mustermann@firma.de" style="background: var(--bg); border: 1px solid var(--border); color: var(--text); padding: 0.75rem 1rem; border-radius: var(--radius-sm); font-family: 'Geist', sans-serif; font-size: 14px; outline: none;">
+                        <div class="settings-group">
+                            <label class="settings-label">E-Mail Adresse</label>
+                            <input type="email" value="max.mustermann@firma.de" class="settings-input">
                         </div>
 
-                        <div style="display: flex; flex-direction: column; gap: 0.5rem;">
-                            <label style="font-family: 'Geist Mono', monospace; font-size: 11px; text-transform: uppercase; color: var(--muted);">Sprache</label>
-                            <select style="background: var(--bg); border: 1px solid var(--border); color: var(--text); padding: 0.75rem 1rem; border-radius: var(--radius-sm); font-family: 'Geist', sans-serif; font-size: 14px; outline: none;">
+                        <div class="settings-group">
+                            <label class="settings-label">Sprache</label>
+                            <select class="settings-input">
                                 <option>Deutsch</option>
                                 <option>Englisch</option>
                             </select>
                         </div>
                         
-                        <div style="margin-top: 1rem;">
-                            <button class="btn" style="background: var(--accent); color: white; margin-right: 1rem; border: none;">Änderungen speichern</button>
+                        <div class="settings-actions">
+                            <button class="btn btn-primary">Änderungen speichern</button>
                             <button class="btn btn-ghost">Abbrechen</button>
                         </div>
                     </div>

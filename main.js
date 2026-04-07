@@ -114,9 +114,43 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Refresh charts on theme flip
     function updateChartColors() {
-        if (revenueChart) revenueChart.destroy();
-        if (sourceChart) sourceChart.destroy();
-        setTimeout(initCharts, 50); // slight delay to allow CSS vars to update dom
+        if (!revenueChart || !sourceChart) {
+            setTimeout(initCharts, 50);
+            return;
+        }
+        const accent = getCssVar('--accent');
+        const border = getCssVar('--border');
+        const surface = getCssVar('--surface');
+        const text = getCssVar('--text');
+        const muted = getCssVar('--muted');
+        const bg = getCssVar('--surface');
+
+        const revCtx = revenueChart.ctx;
+        const gradientRevenue = revCtx.createLinearGradient(0, 0, 0, 400);
+        gradientRevenue.addColorStop(0, accent + '55');
+        gradientRevenue.addColorStop(1, accent + '00');
+
+        revenueChart.data.datasets[0].borderColor = accent;
+        revenueChart.data.datasets[0].pointBackgroundColor = accent;
+        revenueChart.data.datasets[0].pointBorderColor = surface;
+        revenueChart.data.datasets[0].backgroundColor = gradientRevenue;
+        revenueChart.options.plugins.tooltip.backgroundColor = bg;
+        revenueChart.options.plugins.tooltip.titleColor = text;
+        revenueChart.options.plugins.tooltip.bodyColor = text;
+        revenueChart.options.plugins.tooltip.borderColor = border;
+        revenueChart.options.scales.y.grid.color = border;
+        Chart.defaults.color = muted;
+        revenueChart.update();
+
+        sourceChart.data.datasets[0].backgroundColor = [
+            getCssVar('--accent'),
+            getCssVar('--low'),
+            getCssVar('--mid'),
+            getCssVar('--sugg')
+        ];
+        sourceChart.options.plugins.tooltip.backgroundColor = bg;
+        sourceChart.options.plugins.tooltip.borderColor = border;
+        sourceChart.update();
     }
 
     // Initialize 
@@ -153,9 +187,9 @@ document.addEventListener('DOMContentLoaded', () => {
                     tr.setAttribute('data-id', r.id);
                     tr.innerHTML = `
                         <td class="font-medium role-name">${r.name}</td>
-                        <td class="role-perms"><span class="sys-badge badge-offen" style="margin-bottom: 4px;">Zugewiesen</span><br><span class="text-muted perms-detail" style="font-size: 11px;">${r.perms}</span></td>
+                        <td class="role-perms"><span class="sys-badge badge-offen u-role-detail">Zugewiesen</span><br><span class="text-muted perms-detail u-perms-text">${r.perms}</span></td>
                         <td class="font-mono role-salary">${r.salary}</td>
-                        <td><button class="btn btn-ghost btn-edit-role" style="padding: 4px 8px;"><i class="fa-solid fa-pen"></i></button></td>
+                        <td><button class="btn btn-ghost btn-edit-role"><i class="fa-solid fa-pen"></i></button></td>
                     `;
                     tbody.appendChild(tr);
                 });
@@ -185,7 +219,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         <td class="text-muted emp-role">${emp.role}</td>
                         <td class="text-muted">${emp.lastActive}</td>
                         <td class="emp-status"><span class="sys-badge ${badgeClass}">${emp.status}</span></td>
-                        <td><button class="btn btn-ghost btn-edit-emp" style="padding: 4px 8px;"><i class="fa-solid fa-pen"></i></button></td>
+                        <td><button class="btn btn-ghost btn-edit-emp"><i class="fa-solid fa-pen"></i></button></td>
                     `;
                     tbody.appendChild(tr);
                 });

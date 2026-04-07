@@ -73,13 +73,19 @@
     .add-todo-row { display:flex; gap:.75rem; margin-top:1rem; }
     .add-todo-row input { flex:1; background:var(--bg); border:1px solid var(--border); color:var(--text); padding:.7rem 1rem; border-radius:var(--radius-sm); font-family:'Geist',sans-serif; font-size:13px; outline:none; }
     .add-todo-row input:focus { border-color:var(--accent); }
+    .wizard-card { gap:1.25rem; display:flex; flex-direction:column; }
+    .wizard-icon { color:var(--accent); }
+    .timeline-title { font-family:'Instrument Serif',Georgia,serif;font-size:20px;font-style:italic;color:var(--text); }
+    .timeline-range { display:flex;justify-content:space-between; }
+    .timeline-meta { font-family:'Geist Mono',monospace;font-size:10px;color:var(--muted); }
+    .btn-add-todo { padding:8px 16px;font-size:13px; }
   </style>
 </head>
 <body>
 <div class="dashboard-container">
   <!-- Sidebar -->
   <aside class="sidebar">
-    <a href="home.html" class="sidebar-header" style="cursor:pointer">
+    <a href="home.html" class="sidebar-header u-clickable">
       <i class="fa-solid fa-cube logo-icon"></i>
       <h2>MS Dashboard</h2>
     </a>
@@ -118,7 +124,7 @@
 
     <div class="content-area">
       <!-- ════ STATE 1: IDLE ════ -->
-      <div id="view-idle" style="display:none;">
+      <div id="view-idle" class="view-section u-hidden">
         <div class="idle-wrap">
           <i class="fa-regular fa-folder-open idle-icon"></i>
           <h2>Kein aktives Projekt</h2>
@@ -128,7 +134,7 @@
       </div>
 
       <!-- ════ STATE 2: WIZARD ════ -->
-      <div id="view-wizard" style="display:none;">
+      <div id="view-wizard" class="view-section u-hidden">
         <div class="page-header">
           <div>
             <h1 class="page-title">Kundenaufnahme</h1>
@@ -140,8 +146,8 @@
 
           <!-- Step 1 -->
           <div class="wizard-step active" id="step-1">
-            <div class="card" style="gap:1.25rem; display:flex; flex-direction:column;">
-              <div class="wizard-header"><i class="fa-solid fa-user fa-lg" style="color:var(--accent)"></i><h2>Kundendaten</h2></div>
+            <div class="card wizard-card">
+              <div class="wizard-header"><i class="fa-solid fa-user fa-lg wizard-icon"></i><h2>Kundendaten</h2></div>
               <div class="field-group"><label>Kundenname / Veranstaltungsname</label><input id="w-name" type="text" placeholder="z. B. Hochzeit Familie Müller"></div>
               <div class="field-group"><label>Ansprechpartner</label><input id="w-customer" type="text" placeholder="Vor- und Nachname"></div>
               <div class="wizard-actions"><button class="btn-primary" id="step1Next">Weiter <i class="fa-solid fa-arrow-right"></i></button></div>
@@ -150,8 +156,8 @@
 
           <!-- Step 2 -->
           <div class="wizard-step" id="step-2">
-            <div class="card" style="gap:1.25rem; display:flex; flex-direction:column;">
-              <div class="wizard-header"><i class="fa-solid fa-calendar-days fa-lg" style="color:var(--accent)"></i><h2>Veranstaltungsdetails</h2></div>
+            <div class="card wizard-card">
+              <div class="wizard-header"><i class="fa-solid fa-calendar-days fa-lg wizard-icon"></i><h2>Veranstaltungsdetails</h2></div>
               <div class="field-group"><label>Art des Events</label>
                 <select id="w-type">
                   <option value="">– Bitte wählen –</option>
@@ -169,8 +175,8 @@
 
           <!-- Step 3 -->
           <div class="wizard-step" id="step-3">
-            <div class="card" style="gap:1.25rem; display:flex; flex-direction:column;">
-              <div class="wizard-header"><i class="fa-solid fa-location-dot fa-lg" style="color:var(--accent)"></i><h2>Location & Gäste</h2></div>
+            <div class="card wizard-card">
+              <div class="wizard-header"><i class="fa-solid fa-location-dot fa-lg wizard-icon"></i><h2>Location & Gäste</h2></div>
               <div class="field-group"><label>Geplante Location</label><input id="w-location" type="text" placeholder="z. B. Schloss Hohenberg, Berlin"></div>
               <div class="field-group"><label>Anzahl der Gäste</label><input id="w-guests" type="number" min="1" placeholder="z. B. 150"></div>
               <div class="wizard-actions">
@@ -182,8 +188,8 @@
 
           <!-- Step 4 -->
           <div class="wizard-step" id="step-4">
-            <div class="card" style="gap:1.25rem; display:flex; flex-direction:column;">
-              <div class="wizard-header"><i class="fa-solid fa-sack-dollar fa-lg" style="color:var(--accent)"></i><h2>Budget & Notizen</h2></div>
+            <div class="card wizard-card">
+              <div class="wizard-header"><i class="fa-solid fa-sack-dollar fa-lg wizard-icon"></i><h2>Budget & Notizen</h2></div>
               <div class="field-group"><label>Gesamtbudget (€)</label><input id="w-budget" type="text" placeholder="z. B. 25.000"></div>
               <div class="field-group"><label>Besondere Wünsche / Notizen</label><textarea id="w-notes" placeholder="Allergien, Themen, spezielle Anforderungen ..."></textarea></div>
               <div class="wizard-actions">
@@ -196,23 +202,23 @@
       </div>
 
       <!-- ════ STATE 3: TODO ════ -->
-      <div id="view-todo" style="display:none;">
+      <div id="view-todo" class="view-section u-hidden">
         <!-- timeline bar -->
         <div class="timeline-bar" id="timelineBar">
           <div class="timeline-top">
             <div>
               <div class="timeline-label">Aktives Projekt</div>
-              <div style="font-family:'Instrument Serif',Georgia,serif;font-size:20px;font-style:italic;color:var(--text);" id="tlProjectName">–</div>
+              <div class="timeline-title" id="tlProjectName">–</div>
             </div>
-            <div style="text-align:right;">
+            <div class="u-text-right">
               <div class="timeline-label">Verbleibende Zeit</div>
               <div class="timeline-days" id="tlDays">–<span>Tage</span></div>
             </div>
           </div>
-          <div class="progress-track"><div class="progress-fill" id="tlFill" style="width:0%"></div></div>
-          <div style="display:flex;justify-content:space-between;">
-            <span style="font-family:'Geist Mono',monospace;font-size:10px;color:var(--muted);" id="tlStart">Heute</span>
-            <span style="font-family:'Geist Mono',monospace;font-size:10px;color:var(--muted);" id="tlEnd">Event-Datum</span>
+          <div class="progress-track"><div class="progress-fill" id="tlFill"></div></div>
+          <div class="timeline-range">
+            <span class="timeline-meta" id="tlStart">Heute</span>
+            <span class="timeline-meta" id="tlEnd">Event-Datum</span>
           </div>
         </div>
 
@@ -221,26 +227,26 @@
             <h1 class="page-title" id="todoPageTitle">Projektübersicht</h1>
             <p class="page-subtitle">Deine automatisch generierten Aufgaben – hake jede ab, wenn sie erledigt ist.</p>
           </div>
-          <button class="btn btn-ghost" id="btnClearProject" style="flex-shrink:0;"><i class="fa-solid fa-xmark"></i> Projekt wechseln</button>
+          <button class="btn btn-ghost" id="btnClearProject"><i class="fa-solid fa-xmark"></i> Projekt wechseln</button>
         </div>
 
         <div class="todo-columns">
           <!-- Left: Project details -->
-          <div class="card" style="align-self:start;">
-            <div class="table-header" style="margin-bottom:1rem;"><h3>Projektdaten</h3></div>
+          <div class="card">
+            <div class="table-header"><h3>Projektdaten</h3></div>
             <div class="project-info-card" id="projectInfoCard"></div>
           </div>
 
           <!-- Right: Todos -->
           <div class="card">
-            <div class="table-header" style="margin-bottom:0;">
+            <div class="table-header">
               <h3>Aufgabenliste</h3>
-              <span class="font-mono text-muted" id="todoProgress" style="font-size:12px;">0 / 0</span>
+              <span class="u-table-note" id="todoProgress">0 / 0</span>
             </div>
             <ul class="todo-list" id="todoList"></ul>
             <div class="add-todo-row">
               <input type="text" id="newTodoInput" placeholder="Neue Aufgabe hinzufügen ...">
-              <button class="btn-primary" id="addTodoBtn" style="padding:8px 16px;font-size:13px;"><i class="fa-solid fa-plus"></i></button>
+              <button class="btn-primary btn-add-todo" id="addTodoBtn"><i class="fa-solid fa-plus"></i></button>
             </div>
           </div>
         </div>
@@ -286,16 +292,12 @@ async function init() {
 
 // ── Idle ──
 function showIdle() {
-  document.getElementById('view-idle').style.display='';
-  document.getElementById('view-wizard').style.display='none';
-  document.getElementById('view-todo').style.display='none';
+  setView('view-idle');
 }
 
 // ── Wizard ──
 function showWizard(project) {
-  document.getElementById('view-idle').style.display='none';
-  document.getElementById('view-wizard').style.display='';
-  document.getElementById('view-todo').style.display='none';
+  setView('view-wizard');
   if (project) {
     document.getElementById('w-name').value = project.name || '';
     document.getElementById('w-customer').value = project.customer || '';
@@ -311,9 +313,7 @@ function showWizard(project) {
 
 // ── To-Do ──
 async function showTodo(project) {
-  document.getElementById('view-idle').style.display='none';
-  document.getElementById('view-wizard').style.display='none';
-  document.getElementById('view-todo').style.display='';
+  setView('view-todo');
 
   document.getElementById('tlProjectName').textContent = project.name;
   document.getElementById('todoPageTitle').textContent = project.name;
@@ -343,6 +343,19 @@ async function showTodo(project) {
 
   // Todos
   await loadTodos(project.id);
+}
+
+function setView(targetId) {
+  ['view-idle', 'view-wizard', 'view-todo'].forEach(id => {
+    const el = document.getElementById(id);
+    const isTarget = id === targetId;
+    el.classList.toggle('u-hidden', !isTarget);
+    if (isTarget) {
+      requestAnimationFrame(() => el.classList.add('is-visible'));
+    } else {
+      el.classList.remove('is-visible');
+    }
+  });
 }
 
 async function loadTodos(projectId) {
