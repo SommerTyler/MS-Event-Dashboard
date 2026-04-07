@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>M&S Mitarbeiter Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist+Mono:wght@400;500;600&family=Geist:wght@400;500;600&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="container">
+    <header class="glass panel dash-header reveal">
+      <div>
+        <h2 class="title" style="font-size:2.1rem;">Mitarbeiter Dashboard</h2>
+        <p class="copy">Interner Bereich - nur für Team-Mitglieder.</p>
+      </div>
+      <button class="btn btn-ghost" id="logoutBtn">Logout</button>
+    </header>
+
+    <section class="grid-3 reveal" style="margin-top:.7rem;">
+      <article class="kpi"><h3>Aktive Produktionen</h3><p class="copy">12 laufende Projekte</p></article>
+      <article class="kpi"><h3>VIP-Anfragen</h3><p class="copy">5 Priorität-High</p></article>
+      <article class="kpi"><h3>Deckungsbeitrag</h3><p class="copy">+18.4% zu Vormonat</p></article>
+    </section>
+
+    <section class="section reveal">
+      <div class="glass panel">
+        <h2>Willkommen, <span id="userName">...</span></h2>
+        <p class="copy">Rolle: <span id="userRole">...</span></p>
+      </div>
+    </section>
+  </div>
+  <script src="auth.js"></script>
+</body>
+</html>
