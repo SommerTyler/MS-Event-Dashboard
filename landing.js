@@ -5,7 +5,7 @@ async function fetchJson(url, opts) {
 }
 
 function statItem(value, label) {
-  return `<div class="lp-stat"><strong>${value}</strong><span>${label}</span></div>`;
+  return `<div class="lp-stat"><strong data-count="${value}">${value}</strong><span>${label}</span></div>`;
 }
 
 function eventBadge(type) {
@@ -20,10 +20,11 @@ function eventBadge(type) {
 
 async function loadLanding() {
   try {
-    const [stats, services, refs] = await Promise.all([
+    const [stats, services, refs, team] = await Promise.all([
       fetchJson('/api/landing/stats'),
       fetchJson('/api/landing/services'),
-      fetchJson('/api/landing/references')
+      fetchJson('/api/landing/references'),
+      fetchJson('/api/landing/team')
     ]);
 
     document.getElementById('statsGrid').innerHTML = [
@@ -48,6 +49,19 @@ async function loadLanding() {
         <div class="u-table-note">${r.guests} Gäste</div>
       </article>
     `).join('');
+
+    document.getElementById('teamGrid').innerHTML = team.map(m => `
+      <article class="card lp-member">
+        <img src="${m.avatar}" alt="${m.name}">
+        <div>
+          <h4>${m.name}</h4>
+          <p>${m.role}</p>
+        </div>
+      </article>
+    `).join('');
+
+    startCountUp();
+    initReveal();
   } catch (err) {
     console.error(err);
   }
@@ -86,6 +100,65 @@ async function registerReferral() {
   }
 }
 
+function startCountUp() {
+  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (prefersReduced) return;
+  document.querySelectorAll('[data-count]').forEach(el => {
+    const raw = el.getAttribute('data-count');
+    const digits = raw.replace(/\D/g, '');
+    if (!digits) return;
+    const target = Number(digits);
+    let current = 0;
+    const step = Math.max(1, Math.floor(target / 50));
+    const timer = setInterval(() => {
+      current += step;
+      if (current >= target) {
+        current = target;
+        clearInterval(timer);
+      }
+      el.textContent = raw.replace(digits, String(current));
+    }, 20);
+  });
+}
+
+function initReveal() {
+  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const items = document.querySelectorAll('.lp-reveal');
+  if (prefersReduced) {
+    items.forEach(i => i.classList.add('in'));
+    return;
+  }
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('in');
+        obs.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15 });
+  items.forEach((item, idx) => {
+    item.style.transitionDelay = `${Math.min(idx * 35, 220)}ms`;
+    obs.observe(item);
+  });
+}
+
+function initCookieBanner() {
+  const key = 'ms_cookie_ok';
+  const banner = document.getElementById('cookieBanner');
+  if (localStorage.getItem(key) === '1') {
+    banner.style.display = 'none';
+    return;
+  }
+  document.getElementById('cookieAccept').addEventListener('click', () => {
+    localStorage.setItem(key, '1');
+    banner.style.display = 'none';
+  });
+  document.getElementById('cookieClose').addEventListener('click', () => {
+    banner.style.display = 'none';
+  });
+}
+
 document.getElementById('calcBtn').addEventListener('click', calculateOffer);
 document.getElementById('registerReferralBtn').addEventListener('click', registerReferral);
 loadLanding();
+initCookieBanner();

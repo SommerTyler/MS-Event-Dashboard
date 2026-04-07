@@ -3,6 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="M&S Eventagentur in Los Santos: Premium Event Management für Hochzeiten, Races, VIP und Corporate Events.">
+  <meta property="og:title" content="M&S Eventagentur - Los Santos Premium Agency">
+  <meta property="og:description" content="Professionelle Eventplanung mit Premium-Anspruch. Von der Idee bis zur Show.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="/">
   <script>
     (function() {
       const savedTheme = localStorage.getItem('theme') || 'light';
@@ -15,13 +20,20 @@
   <link rel="stylesheet" href="styles.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
+    html { scroll-behavior: smooth; }
     .lp-shell { max-width: 1180px; margin: 0 auto; padding: 1rem 1.25rem 2.5rem; }
-    .lp-nav { position: sticky; top: 1rem; z-index: 200; background: var(--surface); border: 1px solid var(--border); border-radius: 18px; box-shadow: var(--shadow); padding: .9rem 1.2rem; display:flex; justify-content:space-between; align-items:center; }
+    .lp-bg-glow { position: fixed; inset: 0; pointer-events: none; z-index: 0; }
+    .lp-bg-glow::before, .lp-bg-glow::after { content: ''; position: absolute; border-radius: 999px; filter: blur(90px); opacity: .18; }
+    .lp-bg-glow::before { width: 440px; height: 440px; background: var(--accent); top: -100px; left: -70px; animation: floatSlow 13s ease-in-out infinite alternate; }
+    .lp-bg-glow::after { width: 400px; height: 400px; background: var(--low); right: -90px; bottom: -120px; animation: floatSlow 11s ease-in-out infinite alternate-reverse; }
+    @keyframes floatSlow { from { transform: translateY(0) translateX(0); } to { transform: translateY(20px) translateX(14px); } }
+    .lp-nav { position: sticky; top: 1rem; z-index: 200; background: color-mix(in srgb, var(--surface) 85%, transparent); backdrop-filter: blur(8px); border: 1px solid var(--border); border-radius: 18px; box-shadow: var(--shadow); padding: .9rem 1.2rem; display:flex; justify-content:space-between; align-items:center; }
     .lp-brand { display:flex; align-items:center; gap:.75rem; text-decoration:none; color:var(--text); }
     .lp-brand h1 { font-family:'Instrument Serif', Georgia, serif; font-size: 26px; font-style: italic; font-weight: 400; }
     .lp-links { display:flex; gap:.35rem; list-style:none; }
     .lp-links a { text-decoration:none; color:var(--muted); font-family:'Geist Mono', monospace; font-size:11px; text-transform:uppercase; letter-spacing:.04em; padding:8px 12px; border-radius:10px; }
-    .lp-links a:hover { color:var(--text); background:var(--bg2); }
+    .lp-links a:hover { color:var(--text); background:var(--bg2); transform: translateY(-1px); }
+    .lp-shell > * { position: relative; z-index: 1; }
     .lp-hero { margin-top:1.4rem; display:grid; grid-template-columns:1.2fr 1fr; gap:1.25rem; }
     .lp-title { font-family:'Instrument Serif', Georgia, serif; font-size: clamp(2.3rem, 4vw, 3.6rem); font-style: italic; line-height:1.05; margin-bottom:.8rem; }
     .lp-kicker { font-family:'Geist Mono', monospace; text-transform:uppercase; font-size:11px; color:var(--accent); letter-spacing:.06em; margin-bottom: .85rem; display:inline-block; }
@@ -31,7 +43,7 @@
     .lp-dot { width:8px; height:8px; border-radius:50%; background:var(--accent); box-shadow:0 0 8px var(--accent); animation: pulse 1.8s ease infinite; }
     @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: .35; } }
     .lp-stat-grid { display:grid; grid-template-columns: repeat(4, minmax(120px,1fr)); gap:.8rem; margin-top:1.2rem; }
-    .lp-stat { text-align:center; }
+    .lp-stat { text-align:center; padding: .7rem .5rem; border: 1px solid var(--border); border-radius: 10px; background: color-mix(in srgb, var(--surface) 88%, transparent); }
     .lp-stat strong { display:block; font-family:'Geist Mono', monospace; font-size:1.5rem; color:var(--text); }
     .lp-stat span { font-size:11px; color:var(--muted); font-family:'Geist Mono', monospace; text-transform:uppercase; }
     .lp-section { margin-top: 1.25rem; }
@@ -39,6 +51,9 @@
     .lp-services { display:grid; grid-template-columns: repeat(3, minmax(190px, 1fr)); gap:.9rem; }
     .lp-service h3 { margin-bottom:.45rem; font-size: 1rem; }
     .lp-service p { color:var(--muted); font-size:.94rem; }
+    .lp-service { overflow: hidden; position: relative; }
+    .lp-service::after { content: ''; position: absolute; inset: auto -20% -60% -20%; height: 120px; background: radial-gradient(circle, color-mix(in srgb, var(--accent) 30%, transparent), transparent 70%); opacity: 0; transition: opacity .35s ease; }
+    .lp-service:hover::after { opacity: .8; }
     .lp-event-grid { display:grid; grid-template-columns: repeat(3, minmax(220px,1fr)); gap:.9rem; }
     .lp-event .sys-badge { margin-bottom:.7rem; }
     .lp-event h3 { margin-bottom:.45rem; }
@@ -48,25 +63,42 @@
     .lp-steps { display:flex; flex-direction:column; gap:.75rem; }
     .lp-step { display:flex; gap:.7rem; }
     .lp-step strong { min-width:24px; height:24px; border-radius:50%; background:var(--accent-bg); color:var(--accent); display:inline-flex; align-items:center; justify-content:center; font-family:'Geist Mono', monospace; font-size:11px; }
+    .lp-team-grid { display:grid; grid-template-columns: repeat(3, minmax(210px, 1fr)); gap:.9rem; }
+    .lp-member { display:flex; align-items:center; gap:.8rem; }
+    .lp-member img { width:56px; height:56px; border-radius:50%; object-fit: cover; border: 1px solid var(--border); }
+    .lp-member h4 { margin-bottom: 2px; font-size: 14px; }
+    .lp-member p { font-size: 11px; color: var(--muted); font-family: 'Geist Mono', monospace; text-transform: uppercase; }
     .lp-footer { margin-top: 1.5rem; padding: 1rem 1.2rem; display:flex; justify-content:space-between; gap:.8rem; flex-wrap:wrap; font-size:12px; color:var(--muted); }
+    .lp-footer a { color: var(--text); text-decoration: none; border-bottom: 1px dashed var(--border2); }
+    .lp-reveal { opacity: 0; transform: translateY(16px) scale(.99); transition: opacity .8s cubic-bezier(.2, .8, .2, 1), transform .8s cubic-bezier(.2, .8, .2, 1); }
+    .lp-reveal.in { opacity: 1; transform: translateY(0) scale(1); }
+    .cookie-banner { position: fixed; right: 1rem; bottom: 1rem; max-width: 360px; z-index: 300; }
+    .cookie-actions { display:flex; gap:.6rem; margin-top:.7rem; }
     @media (max-width: 980px) {
       .lp-hero, .lp-promo { grid-template-columns: 1fr; }
-      .lp-services, .lp-event-grid { grid-template-columns: 1fr 1fr; }
+      .lp-services, .lp-event-grid, .lp-team-grid { grid-template-columns: 1fr 1fr; }
     }
     @media (max-width: 700px) {
       .lp-links { display:none; }
-      .lp-stat-grid, .lp-services, .lp-event-grid { grid-template-columns: 1fr; }
+      .lp-stat-grid, .lp-services, .lp-event-grid, .lp-team-grid { grid-template-columns: 1fr; }
+      .cookie-banner { left: 1rem; max-width: none; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .lp-bg-glow::before, .lp-bg-glow::after, .lp-dot { animation: none; }
+      .lp-reveal { opacity: 1; transform: none; }
     }
   </style>
 </head>
 <body>
+  <div class="lp-bg-glow"></div>
   <div class="lp-shell">
-    <nav class="lp-nav">
+    <nav class="lp-nav lp-reveal">
       <a href="landing.html" class="lp-brand">
         <i class="fa-solid fa-cube logo-icon"></i>
         <h1>M&S Eventagentur</h1>
       </a>
       <ul class="lp-links">
+        <li><a href="#top">Start</a></li>
         <li><a href="#leistungen">Leistungen</a></li>
         <li><a href="#referenzen">Referenzen</a></li>
         <li><a href="#crew">M+S Crew</a></li>
@@ -74,8 +106,8 @@
       </ul>
     </nav>
 
-    <section class="lp-hero">
-      <article class="card card-accent-top">
+    <section class="lp-hero" id="top">
+      <article class="card card-accent-top lp-reveal">
         <span class="lp-live"><span class="lp-dot"></span> Live - Los Santos Premium Agency</span>
         <h2 class="lp-title">Los Santos' führende Eventagentur</h2>
         <p class="lp-copy">Wir planen das Unvergessliche - von eleganten Hochzeiten bis zu Straßenrennen. Premium Event Management, professionell inszeniert mit maximalem Impact.</p>
@@ -85,7 +117,7 @@
         </div>
         <div class="lp-stat-grid" id="statsGrid"></div>
       </article>
-      <article class="card">
+      <article class="card lp-reveal">
         <h3 class="font-mono text-muted">Warum M&S</h3>
         <p class="lp-copy">Fester Ansprechpartner, eventbasierte Einsatzplanung, Security-Anbindung und skalierbare Abläufe bis 200+ Gäste.</p>
         <div class="lp-steps">
@@ -96,14 +128,14 @@
       </article>
     </section>
 
-    <section class="lp-section" id="leistungen">
+    <section class="lp-section lp-reveal" id="leistungen">
       <div class="card">
         <h2>Unsere Leistungen</h2>
         <div class="lp-services" id="servicesGrid"></div>
       </div>
     </section>
 
-    <section class="lp-section" id="referenzen">
+    <section class="lp-section lp-reveal" id="referenzen">
       <div class="card">
         <div class="table-header">
           <h2>Unsere letzten Events</h2>
@@ -113,7 +145,7 @@
       </div>
     </section>
 
-    <section class="lp-section" id="crew">
+    <section class="lp-section lp-reveal" id="crew">
       <div class="lp-promo">
         <article class="card card-sugg-top">
           <h2>Zusammen 50% sparen</h2>
@@ -134,7 +166,14 @@
       </div>
     </section>
 
-    <section class="lp-section" id="rechner">
+    <section class="lp-section lp-reveal">
+      <div class="card">
+        <h2>Unser Team</h2>
+        <div class="lp-team-grid" id="teamGrid"></div>
+      </div>
+    </section>
+
+    <section class="lp-section lp-reveal" id="rechner">
       <div class="card card-accent-top">
         <h2>Bereit für dein legendäres Event?</h2>
         <p class="lp-copy">Nutze unseren Preisrechner für ein unverbindliches Angebot in Sekunden.</p>
@@ -152,10 +191,23 @@
       </div>
     </section>
 
-    <footer class="card lp-footer">
+    <footer class="card lp-footer lp-reveal">
       <div>M&S Eventagentur - Los Santos Premium Event Management</div>
-      <div>© 2026 M&S Eventagentur · GTA V Roleplay · GVMP</div>
+      <div>
+        <a href="impressum.html">Impressum</a> ·
+        <a href="datenschutz.html">Datenschutz</a> ·
+        © 2026 M&S Eventagentur · GTA V Roleplay · GVMP
+      </div>
     </footer>
+  </div>
+
+  <div class="cookie-banner card" id="cookieBanner">
+    <strong>Cookie-Hinweis</strong>
+    <p class="text-muted">Wir verwenden technisch notwendige Cookies für Login und Seitenfunktionen.</p>
+    <div class="cookie-actions">
+      <button class="btn btn-primary" id="cookieAccept">Verstanden</button>
+      <button class="btn btn-ghost" id="cookieClose">Schließen</button>
+    </div>
   </div>
 
   <script src="landing.js"></script>

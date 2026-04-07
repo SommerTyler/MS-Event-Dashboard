@@ -171,6 +171,26 @@ const db = new sqlite3.Database('./dashboard.db', (err) => {
             referred TEXT NOT NULL,
             createdAt TEXT DEFAULT CURRENT_TIMESTAMP
         )`);
+
+        // Landing team
+        db.run(`CREATE TABLE IF NOT EXISTS landing_team (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            name TEXT NOT NULL,
+            role TEXT NOT NULL,
+            avatar TEXT NOT NULL
+        )`, () => {
+            db.get("SELECT count(*) as count FROM landing_team", (err, row) => {
+                if (row && row.count === 0) {
+                    db.run(`INSERT INTO landing_team (name, role, avatar) VALUES
+                        ('Mia Stein', 'Event Director', 'https://i.pravatar.cc/150?img=47'),
+                        ('Noah Krause', 'Operations Lead', 'https://i.pravatar.cc/150?img=15'),
+                        ('Sophie Werner', 'VIP & Security Lead', 'https://i.pravatar.cc/150?img=32'),
+                        ('Luca Hartmann', 'Race Coordination', 'https://i.pravatar.cc/150?img=12'),
+                        ('Emma Vogt', 'Client Experience', 'https://i.pravatar.cc/150?img=20'),
+                        ('Leon Fischer', 'Stage & Production', 'https://i.pravatar.cc/150?img=61')`);
+                }
+            });
+        });
     });
 });
 
@@ -336,6 +356,13 @@ app.get('/api/landing/services', (req, res) => {
 
 app.get('/api/landing/references', (req, res) => {
     db.all("SELECT id, title, eventType, eventTypeLabel, description, guests FROM landing_references ORDER BY id ASC", [], (err, rows) => {
+        if (err) return res.status(500).json({ error: err.message });
+        res.json(rows);
+    });
+});
+
+app.get('/api/landing/team', (req, res) => {
+    db.all("SELECT id, name, role, avatar FROM landing_team ORDER BY id ASC", [], (err, rows) => {
         if (err) return res.status(500).json({ error: err.message });
         res.json(rows);
     });
