@@ -1,54 +1,40 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="de">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>M&S Login</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com"/>
-  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist+Mono:wght@400;500;600&family=Geist:wght@400;500;600&display=swap" rel="stylesheet"/>
-  <link rel="stylesheet" href="styles.css">
-</head>
-<body>
-  <main class="form-shell">
-    <form class="glass form-card" id="loginForm">
-      <h2>Mitarbeiter Login</h2>
-      <p class="copy">Nur für internes Team. Nach Login geht es direkt ins Dashboard.</p>
-      <div class="field">
-        <label>E-Mail</label>
-        <input type="email" id="email" required placeholder="admin@ms-dashboard.de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login | M+S Eventagentur</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="container topbar-row">
+        <a class="brand" href="./landing.html">M+S Eventagentur</a>
+        <div class="pill">Sicherer Login</div>
       </div>
-      <div class="field">
-        <label>Passwort</label>
-        <input type="password" id="password" required placeholder="••••••••">
-      </div>
-      <div class="row">
-        <button class="btn btn-primary" type="submit">Anmelden</button>
-        <a class="btn btn-ghost" href="/">Zur Landing</a>
-      </div>
-      <p class="copy" id="loginMsg"></p>
-    </form>
-  </main>
-  <script>
-    const msg = document.getElementById('loginMsg');
-    document.getElementById('loginForm').addEventListener('submit', async (e) => {
-      e.preventDefault();
-      msg.textContent = 'Prüfe Zugang...';
-      const email = document.getElementById('email').value;
-      const password = document.getElementById('password').value;
-      const res = await fetch('/api/auth/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password })
-      });
-      const data = await res.json();
-      if (!res.ok) {
-        msg.textContent = data.error || 'Login fehlgeschlagen';
-        return;
-      }
-      localStorage.setItem('ms_token', data.token);
-      localStorage.setItem('ms_user', JSON.stringify(data.user));
-      window.location.href = '/dashboard';
-    });
-  </script>
-</body>
+    </header>
+
+    <main class="form-wrap">
+      <form class="form-card" id="login-form">
+        <h1>Mitarbeiter-Login</h1>
+        <p class="muted">
+          Testzugang: <strong>admin@ms-events.de</strong> / <strong>event2026</strong>
+        </p>
+        <div class="field">
+          <label for="email">E-Mail</label>
+          <input id="email" name="email" type="email" required />
+        </div>
+        <div class="field">
+          <label for="password">Passwort</label>
+          <input id="password" name="password" type="password" required />
+        </div>
+        <button type="submit" class="btn btn-primary" style="width: 100%">
+          Einloggen
+        </button>
+        <p id="error" class="error"></p>
+      </form>
+    </main>
+
+    <script src="./auth.js"></script>
+  </body>
 </html>

@@ -1,36 +1,74 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="de">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>M&S Mitarbeiter Dashboard</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com"/>
-  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist+Mono:wght@400;500;600&family=Geist:wght@400;500;600&display=swap" rel="stylesheet"/>
-  <link rel="stylesheet" href="styles.css">
-</head>
-<body>
-  <div class="container">
-    <header class="glass panel dash-header reveal">
-      <div>
-        <h2 class="title" style="font-size:2.1rem;">Mitarbeiter Dashboard</h2>
-        <p class="copy">Interner Bereich - nur für Team-Mitglieder.</p>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard | M+S Eventagentur</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="container topbar-row">
+        <a class="brand" href="./landing.html">M+S Eventagentur</a>
+        <div style="display: flex; gap: 0.5rem; align-items: center">
+          <span class="pill" id="welcome-user">Angemeldet</span>
+          <button class="btn btn-secondary" id="logout-btn" type="button">Logout</button>
+        </div>
       </div>
-      <button class="btn btn-ghost" id="logoutBtn">Logout</button>
     </header>
 
-    <section class="grid-3 reveal" style="margin-top:.7rem;">
-      <article class="kpi"><h3>Aktive Produktionen</h3><p class="copy">12 laufende Projekte</p></article>
-      <article class="kpi"><h3>VIP-Anfragen</h3><p class="copy">5 Priorität-High</p></article>
-      <article class="kpi"><h3>Deckungsbeitrag</h3><p class="copy">+18.4% zu Vormonat</p></article>
-    </section>
+    <main class="container" style="padding: 1rem 0 2rem">
+      <section class="grid" id="stats"></section>
 
-    <section class="section reveal">
-      <div class="glass panel">
-        <h2>Willkommen, <span id="userName">...</span></h2>
-        <p class="copy">Rolle: <span id="userRole">...</span></p>
-      </div>
-    </section>
-  </div>
-  <script src="auth.js"></script>
-</body>
+      <section class="grid" style="margin-top: 0.9rem">
+        <article class="card wide">
+          <h2 class="section-title">Kommende Einsaetze</h2>
+          <div class="toolbar">
+            <select id="event-filter">
+              <option value="all">Alle Standorte</option>
+              <option value="Hamburg">Hamburg</option>
+              <option value="Berlin">Berlin</option>
+              <option value="Muenchen">Muenchen</option>
+            </select>
+          </div>
+          <table>
+            <thead>
+              <tr>
+                <th>Datum</th>
+                <th>Event</th>
+                <th>Ort</th>
+                <th>Team</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody id="event-body"></tbody>
+          </table>
+        </article>
+
+        <article class="card narrow">
+          <h2 class="section-title">Offene Aufgaben</h2>
+          <ul class="list" id="task-list"></ul>
+        </article>
+      </section>
+
+      <section class="grid" style="margin-top: 0.9rem">
+        <article class="card wide">
+          <h2 class="section-title">Mitarbeiterstatus</h2>
+          <table>
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Rolle</th>
+                <th>Naechster Einsatz</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody id="staff-body"></tbody>
+          </table>
+        </article>
+      </section>
+    </main>
+
+    <script src="./dashboard.js"></script>
+  </body>
 </html>

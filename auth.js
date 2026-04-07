@@ -1,34 +1,28 @@
-(async function() {
-  const token = localStorage.getItem('ms_token');
-  if (!token) {
-    window.location.href = '/login.html';
-    return;
-  }
+(function () {
+  const form = document.getElementById("login-form");
+  if (!form) return;
 
-  try {
-    const res = await fetch('/api/auth/me', {
-      headers: { Authorization: 'Bearer ' + token }
-    });
-    if (!res.ok) throw new Error('unauthorized');
-    const data = await res.json();
-    const user = data.user || {};
-    document.getElementById('userName').textContent = user.name || 'Mitarbeiter';
-    document.getElementById('userRole').textContent = user.role || '-';
-  } catch {
-    localStorage.removeItem('ms_token');
-    localStorage.removeItem('ms_user');
-    window.location.href = '/login.html';
-    return;
-  }
+  const errorElement = document.getElementById("error");
+  const validUser = {
+    email: "admin@ms-events.de",
+    password: "event2026",
+    name: "Leitung Disposition"
+  };
 
-  const items = document.querySelectorAll('.reveal');
-  items.forEach((it, idx) => {
-    setTimeout(() => it.classList.add('in'), Math.min(idx * 120, 300));
-  });
+  form.addEventListener("submit", function (event) {
+    event.preventDefault();
+    const email = document.getElementById("email").value.trim().toLowerCase();
+    const password = document.getElementById("password").value.trim();
 
-  document.getElementById('logoutBtn').addEventListener('click', () => {
-    localStorage.removeItem('ms_token');
-    localStorage.removeItem('ms_user');
-    window.location.href = '/login.html';
+    if (email === validUser.email && password === validUser.password) {
+      localStorage.setItem(
+        "msAuth",
+        JSON.stringify({ email: validUser.email, name: validUser.name })
+      );
+      window.location.href = "./dashboard.html";
+      return;
+    }
+
+    errorElement.textContent = "Login fehlgeschlagen. Bitte Zugangsdaten pruefen.";
   });
 })();

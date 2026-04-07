@@ -1,105 +1,48 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="de">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>M&S Eventagentur - Premium Landing</title>
-  <meta name="description" content="Premium Eventagentur mit exklusiven Formaten, glasklarem Look und maximaler Inszenierung.">
-  <link rel="preconnect" href="https://fonts.googleapis.com"/>
-  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist+Mono:wght@400;500;600&family=Geist:wght@400;500;600&display=swap" rel="stylesheet"/>
-  <link rel="stylesheet" href="styles.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-</head>
-<body>
-  <div class="container">
-    <nav class="nav glass reveal">
-      <a class="brand" href="/">
-        <i class="fa-solid fa-cube"></i>
-        <h1>M&S Eventagentur</h1>
-      </a>
-      <ul class="nav-links">
-        <li><a href="#services">Leistungen</a></li>
-        <li><a href="#refs">Referenzen</a></li>
-        <li><a href="#team">Team</a></li>
-        <li><a href="/login.html">Login</a></li>
-      </ul>
-    </nav>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>M+S Eventagentur | Mitarbeiter-Dashboard</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="container topbar-row">
+        <div class="brand">M+S Eventagentur</div>
+        <div class="pill">Mitarbeiterbereich</div>
+      </div>
+    </header>
 
-    <section class="hero">
-      <article class="glass panel reveal hero-main">
-        <div class="floating-shape"></div>
-        <div class="floating-shape small"></div>
-        <span class="badge"><i class="fa-solid fa-circle"></i> LIVE · Los Santos Premium Agency</span>
-        <h2 class="title">Unvergessliche Events mit Luxus-DNA.</h2>
-        <p class="copy">Von High-End Hochzeiten bis zu intensiven Racing-Nights: Wir liefern Erlebnisse, die teuer aussehen, perfekt laufen und lange im Kopf bleiben.</p>
-        <div class="row">
-          <a class="btn btn-primary" href="#calc"><i class="fa-solid fa-calculator"></i> Preisrechner starten</a>
-          <a class="btn btn-ghost" href="/login.html"><i class="fa-solid fa-right-to-bracket"></i> Mitarbeiter Login</a>
-        </div>
-        <div class="stats" id="statsGrid"></div>
-        <div class="hero-overlay-cards">
-          <article class="mini-card">
-            <h4>Unsere Services</h4>
-            <p>Corporate, Private und Highlight-Events in kompromisslos hochwertiger Qualität.</p>
-          </article>
-          <article class="mini-card image">
-            <h4>Vergangene Highlights</h4>
-          </article>
-        </div>
-      </article>
-      <article class="glass panel reveal">
-        <h3>Wofür wir stehen</h3>
-        <p class="copy">Präzise Planung, starke Regie und maximale Wirkung auf jeder Bühne.</p>
-        <div class="card glass">
-          <h3>Konzept + Produktion</h3>
-          <p>Wir verbinden Dramaturgie, Technik und Service zu einem Premium-Gesamterlebnis.</p>
-        </div>
-      </article>
-    </section>
+    <main class="container hero">
+      <h1>Willkommen im Dashboard der M+S Eventagentur</h1>
+      <p>
+        Plane Einsatztage, sehe offene Aufgaben und behalte den Status aller
+        Teammitglieder im Blick. Das Dashboard ist speziell fuer den internen
+        Mitarbeiterbetrieb gedacht.
+      </p>
+      <a class="btn btn-primary" href="./login.html">Zum Login</a>
+    </main>
 
-    <section class="section" id="services">
-      <div class="glass panel reveal">
-        <h2>Unsere Leistungen</h2>
-        <div class="grid-3" id="servicesGrid"></div>
+    <section class="container" style="padding-bottom: 2rem">
+      <div class="grid">
+        <article class="card stat">
+          <h3>Events diese Woche</h3>
+          <p>9</p>
+        </article>
+        <article class="card stat">
+          <h3>Verfuegbare Mitarbeiter</h3>
+          <p>24</p>
+        </article>
+        <article class="card stat">
+          <h3>Offene Aufgaben</h3>
+          <p>13</p>
+        </article>
+        <article class="card stat">
+          <h3>Neue Bewerbungen</h3>
+          <p>4</p>
+        </article>
       </div>
     </section>
-
-    <section class="section" id="refs">
-      <div class="glass panel reveal">
-        <h2>Unsere letzten Events</h2>
-        <div class="grid-3" id="refsGrid"></div>
-      </div>
-    </section>
-
-    <section class="section" id="team">
-      <div class="glass panel reveal">
-        <h2>Unser Team</h2>
-        <div class="grid-3" id="teamGrid"></div>
-      </div>
-    </section>
-
-    <section class="section" id="calc">
-      <div class="glass panel reveal">
-        <h2>Preisrechner</h2>
-        <div class="row">
-          <select id="calcType">
-            <option value="wedding">Hochzeit</option>
-            <option value="street_race">Street Race</option>
-            <option value="corporate">Corporate</option>
-            <option value="vip">VIP/Security</option>
-          </select>
-          <input id="calcGuests" type="number" min="10" value="100">
-          <button class="btn btn-primary" id="calcBtn"><i class="fa-solid fa-wand-magic-sparkles"></i> Angebot berechnen</button>
-        </div>
-        <p class="copy" id="calcOut">Noch kein Angebot berechnet.</p>
-      </div>
-    </section>
-
-    <footer class="glass footer reveal">
-      <span>M&S Eventagentur · Premium Event Management</span>
-      <span><a href="/impressum.html">Impressum</a> · <a href="/datenschutz.html">Datenschutz</a></span>
-    </footer>
-  </div>
-  <script src="landing.js"></script>
-</body>
+  </body>
 </html>
