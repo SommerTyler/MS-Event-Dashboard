@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="de" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script>
+    (function() {
+      const savedTheme = localStorage.getItem('theme') || 'light';
+      document.documentElement.setAttribute('data-theme', savedTheme);
+    })();
+  </script>
+  <title>M&S Eventagentur - Landing</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist+Mono:wght@400;500;600&family=Geist:wght@400;500;600&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    .lp-shell { max-width: 1180px; margin: 0 auto; padding: 1rem 1.25rem 2.5rem; }
+    .lp-nav { position: sticky; top: 1rem; z-index: 200; background: var(--surface); border: 1px solid var(--border); border-radius: 18px; box-shadow: var(--shadow); padding: .9rem 1.2rem; display:flex; justify-content:space-between; align-items:center; }
+    .lp-brand { display:flex; align-items:center; gap:.75rem; text-decoration:none; color:var(--text); }
+    .lp-brand h1 { font-family:'Instrument Serif', Georgia, serif; font-size: 26px; font-style: italic; font-weight: 400; }
+    .lp-links { display:flex; gap:.35rem; list-style:none; }
+    .lp-links a { text-decoration:none; color:var(--muted); font-family:'Geist Mono', monospace; font-size:11px; text-transform:uppercase; letter-spacing:.04em; padding:8px 12px; border-radius:10px; }
+    .lp-links a:hover { color:var(--text); background:var(--bg2); }
+    .lp-hero { margin-top:1.4rem; display:grid; grid-template-columns:1.2fr 1fr; gap:1.25rem; }
+    .lp-title { font-family:'Instrument Serif', Georgia, serif; font-size: clamp(2.3rem, 4vw, 3.6rem); font-style: italic; line-height:1.05; margin-bottom:.8rem; }
+    .lp-kicker { font-family:'Geist Mono', monospace; text-transform:uppercase; font-size:11px; color:var(--accent); letter-spacing:.06em; margin-bottom: .85rem; display:inline-block; }
+    .lp-copy { color:var(--muted); max-width: 64ch; }
+    .lp-cta-row { margin-top:1.2rem; display:flex; gap:.75rem; flex-wrap:wrap; }
+    .lp-live { display:inline-flex; align-items:center; gap:.45rem; background:var(--accent-bg); color:var(--accent); border:1px solid color-mix(in srgb, var(--accent) 55%, transparent); border-radius:999px; padding:5px 10px; font-family:'Geist Mono', monospace; font-size:10px; text-transform:uppercase; }
+    .lp-dot { width:8px; height:8px; border-radius:50%; background:var(--accent); box-shadow:0 0 8px var(--accent); animation: pulse 1.8s ease infinite; }
+    @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: .35; } }
+    .lp-stat-grid { display:grid; grid-template-columns: repeat(4, minmax(120px,1fr)); gap:.8rem; margin-top:1.2rem; }
+    .lp-stat { text-align:center; }
+    .lp-stat strong { display:block; font-family:'Geist Mono', monospace; font-size:1.5rem; color:var(--text); }
+    .lp-stat span { font-size:11px; color:var(--muted); font-family:'Geist Mono', monospace; text-transform:uppercase; }
+    .lp-section { margin-top: 1.25rem; }
+    .lp-section h2 { font-family:'Instrument Serif', Georgia, serif; font-style:italic; font-size:2rem; margin-bottom: .9rem; }
+    .lp-services { display:grid; grid-template-columns: repeat(3, minmax(190px, 1fr)); gap:.9rem; }
+    .lp-service h3 { margin-bottom:.45rem; font-size: 1rem; }
+    .lp-service p { color:var(--muted); font-size:.94rem; }
+    .lp-event-grid { display:grid; grid-template-columns: repeat(3, minmax(220px,1fr)); gap:.9rem; }
+    .lp-event .sys-badge { margin-bottom:.7rem; }
+    .lp-event h3 { margin-bottom:.45rem; }
+    .lp-event p { color:var(--muted); margin-bottom:.75rem; }
+    .lp-promo { display:grid; grid-template-columns: 1.3fr 1fr; gap:.9rem; }
+    .lp-promo .big { font-family:'Geist Mono', monospace; font-size:2rem; }
+    .lp-steps { display:flex; flex-direction:column; gap:.75rem; }
+    .lp-step { display:flex; gap:.7rem; }
+    .lp-step strong { min-width:24px; height:24px; border-radius:50%; background:var(--accent-bg); color:var(--accent); display:inline-flex; align-items:center; justify-content:center; font-family:'Geist Mono', monospace; font-size:11px; }
+    .lp-footer { margin-top: 1.5rem; padding: 1rem 1.2rem; display:flex; justify-content:space-between; gap:.8rem; flex-wrap:wrap; font-size:12px; color:var(--muted); }
+    @media (max-width: 980px) {
+      .lp-hero, .lp-promo { grid-template-columns: 1fr; }
+      .lp-services, .lp-event-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 700px) {
+      .lp-links { display:none; }
+      .lp-stat-grid, .lp-services, .lp-event-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="lp-shell">
+    <nav class="lp-nav">
+      <a href="landing.html" class="lp-brand">
+        <i class="fa-solid fa-cube logo-icon"></i>
+        <h1>M&S Eventagentur</h1>
+      </a>
+      <ul class="lp-links">
+        <li><a href="#leistungen">Leistungen</a></li>
+        <li><a href="#referenzen">Referenzen</a></li>
+        <li><a href="#crew">M+S Crew</a></li>
+        <li><a href="login.html">Login</a></li>
+      </ul>
+    </nav>
+
+    <section class="lp-hero">
+      <article class="card card-accent-top">
+        <span class="lp-live"><span class="lp-dot"></span> Live - Los Santos Premium Agency</span>
+        <h2 class="lp-title">Los Santos' führende Eventagentur</h2>
+        <p class="lp-copy">Wir planen das Unvergessliche - von eleganten Hochzeiten bis zu Straßenrennen. Premium Event Management, professionell inszeniert mit maximalem Impact.</p>
+        <div class="lp-cta-row">
+          <a class="btn btn-primary" href="#rechner"><i class="fa-solid fa-calculator"></i> Preisrechner starten</a>
+          <a class="btn btn-ghost" href="#referenzen"><i class="fa-solid fa-images"></i> Referenzen ansehen</a>
+        </div>
+        <div class="lp-stat-grid" id="statsGrid"></div>
+      </article>
+      <article class="card">
+        <h3 class="font-mono text-muted">Warum M&S</h3>
+        <p class="lp-copy">Fester Ansprechpartner, eventbasierte Einsatzplanung, Security-Anbindung und skalierbare Abläufe bis 200+ Gäste.</p>
+        <div class="lp-steps">
+          <div class="lp-step"><strong>1</strong><div><h4>Konzept</h4><p class="text-muted">Anfrage, Ziel und Budget sauber definieren.</p></div></div>
+          <div class="lp-step"><strong>2</strong><div><h4>Planung</h4><p class="text-muted">Timeline, Partner und Crew aufsetzen.</p></div></div>
+          <div class="lp-step"><strong>3</strong><div><h4>Execution</h4><p class="text-muted">Vor Ort liefern, live nachsteuern, Qualität sichern.</p></div></div>
+        </div>
+      </article>
+    </section>
+
+    <section class="lp-section" id="leistungen">
+      <div class="card">
+        <h2>Unsere Leistungen</h2>
+        <div class="lp-services" id="servicesGrid"></div>
+      </div>
+    </section>
+
+    <section class="lp-section" id="referenzen">
+      <div class="card">
+        <div class="table-header">
+          <h2>Unsere letzten Events</h2>
+          <button class="btn btn-ghost">Alle Events</button>
+        </div>
+        <div class="lp-event-grid" id="eventGrid"></div>
+      </div>
+    </section>
+
+    <section class="lp-section" id="crew">
+      <div class="lp-promo">
+        <article class="card card-sugg-top">
+          <h2>Zusammen 50% sparen</h2>
+          <p class="lp-copy">Empfiehl uns weiter und profitiert beide: dein Freund und du erhaltet jeweils 25% Rabatt oder 10% Cash-Bonus.</p>
+          <div class="big">25% + 25% = 50%</div>
+          <div class="lp-cta-row">
+            <button class="btn btn-primary" id="registerReferralBtn"><i class="fa-solid fa-user-plus"></i> Jetzt registrieren</button>
+          </div>
+        </article>
+        <article class="card">
+          <h3 class="font-mono text-muted">So funktioniert's</h3>
+          <div class="lp-steps">
+            <div class="lp-step"><strong>1</strong><div>Registriere dich mit deinem InGame-Charakternamen.</div></div>
+            <div class="lp-step"><strong>2</strong><div>Freund nennt deinen Namen bei der Buchung.</div></div>
+            <div class="lp-step"><strong>3</strong><div>Beide profitieren vom Rabattprogramm.</div></div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="lp-section" id="rechner">
+      <div class="card card-accent-top">
+        <h2>Bereit für dein legendäres Event?</h2>
+        <p class="lp-copy">Nutze unseren Preisrechner für ein unverbindliches Angebot in Sekunden.</p>
+        <div class="lp-cta-row">
+          <select id="calcType" class="btn btn-subtle">
+            <option value="wedding">Hochzeit</option>
+            <option value="street_race">Straßenrennen</option>
+            <option value="corporate">Corporate Event</option>
+            <option value="vip">Security/VIP Event</option>
+          </select>
+          <input id="calcGuests" class="btn btn-subtle" type="number" min="10" value="80" />
+          <button class="btn btn-primary" id="calcBtn"><i class="fa-solid fa-wand-magic-sparkles"></i> Angebot berechnen</button>
+        </div>
+        <p id="calcResult" class="u-table-note" style="margin-top:.75rem;">Noch kein Angebot berechnet.</p>
+      </div>
+    </section>
+
+    <footer class="card lp-footer">
+      <div>M&S Eventagentur - Los Santos Premium Event Management</div>
+      <div>© 2026 M&S Eventagentur · GTA V Roleplay · GVMP</div>
+    </footer>
+  </div>
+
+  <script src="landing.js"></script>
+</body>
+</html>

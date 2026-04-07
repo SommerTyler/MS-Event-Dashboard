@@ -12,6 +12,7 @@ const JWT_SECRET = 'ms-dashboard-secret-2026';
 app.use(cors());
 app.use(express.json());
 app.use(express.static(path.join(__dirname)));
+app.get('/', (req, res) => res.sendFile(path.join(__dirname, 'landing.html')));
 
 const db = new sqlite3.Database('./dashboard.db', (err) => {
     if (err) { console.error("DB Connection error:", err); return; }
@@ -124,6 +125,52 @@ const db = new sqlite3.Database('./dashboard.db', (err) => {
                 }
             });
         });
+
+        // Landing services
+        db.run(`CREATE TABLE IF NOT EXISTS landing_services (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            title TEXT NOT NULL,
+            description TEXT NOT NULL
+        )`, () => {
+            db.get("SELECT count(*) as count FROM landing_services", (err, row) => {
+                if (row && row.count === 0) {
+                    db.run(`INSERT INTO landing_services (title, description) VALUES
+                        ('Hochzeiten & Zeremonien', 'Von der Tischkarte bis zum Feuerwerk - wir planen euren Tag bis ins kleinste Detail.'),
+                        ('Straßenrennen & Races', 'Streckenplanung, Absicherung, Live-Kommentierung und exklusive After-Partys.'),
+                        ('Security & VIP-Events', 'Full-Security-Konzept, Escort-Service und exklusiver VIP-Zugang.'),
+                        ('Corporate & Firmenfeiern', 'Business-Events auf höchstem Level in Premium-Locations.'),
+                        ('Schnitzeljagden', 'City-wide Scavenger Hunts durch ganz Los Santos mit bis zu 200 Teilnehmern.'),
+                        ('Team-Events & Partys', 'Clubnächte, private Partys und Teambuilding-Maßnahmen nach Maß.')`);
+                }
+            });
+        });
+
+        // Landing references
+        db.run(`CREATE TABLE IF NOT EXISTS landing_references (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            title TEXT NOT NULL,
+            eventType TEXT NOT NULL,
+            eventTypeLabel TEXT NOT NULL,
+            description TEXT NOT NULL,
+            guests INTEGER DEFAULT 0
+        )`, () => {
+            db.get("SELECT count(*) as count FROM landing_references", (err, row) => {
+                if (row && row.count === 0) {
+                    db.run(`INSERT INTO landing_references (title, eventType, eventTypeLabel, description, guests) VALUES
+                        ('Hochzeit am Vinewood Hills', 'wedding', 'WEDDING', 'Luxushochzeit für zwei GTA-Online Charaktere in den Vinewood Hills.', 80),
+                        ('Straßenrennen: Midnight Blaze Cup', 'street_race', 'STREET RACE', 'Illegales Straßenrennen durch Downtown Los Santos - organisiert, gestreckt, legendär.', 175),
+                        ('Corporate Gala - Maze Bank Tower', 'corporate', 'CORPORATE', 'Exklusive Firmenfeier einer RP-Großkanzlei im 71. Stock des Maze Bank Towers.', 120)`);
+                }
+            });
+        });
+
+        // Landing referral leads
+        db.run(`CREATE TABLE IF NOT EXISTS landing_referrals (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            recommender TEXT NOT NULL,
+            referred TEXT NOT NULL,
+            createdAt TEXT DEFAULT CURRENT_TIMESTAMP
+        )`);
     });
 });
 
@@ -256,6 +303,69 @@ app.post('/api/announcements', authMiddleware, (req, res) => {
     if (req.user.rank < 10) return res.status(403).json({error: 'Berichtigung nicht ausreichend (Rang 10+ erforderlich).'});
     db.run(`INSERT INTO announcements (authorName, authorRole, text) VALUES (?,?,?)`, [req.user.name, req.user.role, text], function(err) {
         if (err) res.status(500).json({error: err.message}); else res.json({id: this.lastID, authorName: req.user.name, authorRole: req.user.role, text, createdAt: new Date()});
+    });
+});
+
+// ─── LANDING ───
+app.get('/api/landing/stats', (req, res) => {
+    const sql = `
+      SELECT
+        (SELECT COUNT(*) FROM projects) AS eventsPlanned,
+        (SELECT COUNT(*) FROM employees) AS supportRate,
+        (SELECT IFNULL(SUM(CAST(REPLACE(REPLACE(budget,'€',''),',','') AS REAL)), 0) FROM projects) AS rawRevenue
+    `;
+    db.get(sql, [], (err, row) => {
+        if (err) return res.status(500).json({ error: err.message });
+        const revenue = Number(row.rawRevenue || 0);
+        const support = Number(row.supportRate || 0);
+        res.json({
+            eventsPlanned: row.eventsPlanned || 0,
+            revenueGenerated: `€${Math.round(revenue).toLocaleString('de-DE')}`,
+            customerSatisfaction: '99%',
+            supportRate: `${support || 24}/7`
+        });
+    });
+});
+
+app.get('/api/landing/services', (req, res) => {
+    db.all("SELECT id, title, description FROM landing_services ORDER BY id ASC", [], (err, rows) => {
+        if (err) return res.status(500).json({ error: err.message });
+        res.json(rows);
+    });
+});
+
+app.get('/api/landing/references', (req, res) => {
+    db.all("SELECT id, title, eventType, eventTypeLabel, description, guests FROM landing_references ORDER BY id ASC", [], (err, rows) => {
+        if (err) return res.status(500).json({ error: err.message });
+        res.json(rows);
+    });
+});
+
+app.post('/api/landing/referral-register', (req, res) => {
+    const { recommender, referred } = req.body;
+    if (!recommender || !referred) return res.status(400).json({ error: 'Namen erforderlich' });
+    db.run(`INSERT INTO landing_referrals (recommender, referred) VALUES (?,?)`, [recommender.trim(), referred.trim()], function(err) {
+        if (err) return res.status(500).json({ error: err.message });
+        res.json({ id: this.lastID, recommender, referred });
+    });
+});
+
+app.post('/api/landing/calculate', (req, res) => {
+    const { eventType, guests } = req.body;
+    const g = Math.max(10, Number(guests) || 10);
+    const baseMap = {
+        wedding: 4500,
+        street_race: 6200,
+        corporate: 5400,
+        vip: 7800
+    };
+    const base = baseMap[eventType] || 5000;
+    const perGuest = eventType === 'street_race' ? 22 : 18;
+    const total = base + g * perGuest;
+    res.json({
+        total,
+        totalFormatted: `€${total.toLocaleString('de-DE')}`,
+        note: `Basis ${eventType} + ${g} Gäste kalkuliert`
     });
 });
 
