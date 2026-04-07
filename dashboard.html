@@ -6,27 +6,25 @@
     <title>Dashboard | M+S Eventagentur</title>
     <link rel="stylesheet" href="./styles.css" />
   </head>
-  <body class="lux-page">
-    <main class="dashboard-shell">
-      <article class="lux-panel dashboard-panel">
-        <header class="lux-nav">
-          <a class="lux-logo" href="./landing.html">M+S <span>EVENTAGENTUR</span></a>
-          <nav>
-            <a href="./landing.html">Home</a>
-            <a href="#">Einteilungen</a>
-            <a href="#">Journal</a>
-            <a href="#">Contact</a>
-          </nav>
-          <div class="dashboard-user">
-            <span class="pill" id="welcome-user">Angemeldet</span>
-            <button class="btn btn-secondary" id="logout-btn" type="button">Logout</button>
-          </div>
-        </header>
+  <body>
+    <header class="nav scrolled">
+      <a class="nav__logo" href="./landing.html">M+<span class="gold">S</span><span class="nav__logo-sub">Eventagentur</span></a>
+      <nav class="nav__links">
+        <a class="nav__link" href="./landing.html">Home</a>
+        <a class="nav__link active" href="./dashboard.html">Dashboard</a>
+      </nav>
+      <div class="nav__icons">
+        <span class="badge badge--gold" id="welcome-user">Angemeldet</span>
+        <button class="btn btn--outline" id="logout-btn" type="button">Logout</button>
+      </div>
+    </header>
 
-        <section class="grid dashboard-grid" id="stats"></section>
+    <section class="section section--deeper dashboard-wrap">
+      <div class="container">
+        <section class="grid-4 dashboard-stats" id="stats"></section>
 
-        <section class="grid dashboard-grid">
-          <article class="card wide">
+        <section class="grid-3 dashboard-grid">
+          <article class="card dashboard-wide">
             <h2 class="section-title">Kommende Einsaetze</h2>
             <div class="toolbar">
               <select id="event-filter">
@@ -50,14 +48,14 @@
             </table>
           </article>
 
-          <article class="card narrow">
+          <article class="card dashboard-narrow">
             <h2 class="section-title">Offene Aufgaben</h2>
             <ul class="list" id="task-list"></ul>
           </article>
         </section>
 
-        <section class="grid dashboard-grid">
-          <article class="card wide">
+        <section class="dashboard-grid">
+          <article class="card">
             <h2 class="section-title">Mitarbeiterstatus</h2>
             <table>
               <thead>
@@ -72,8 +70,8 @@
             </table>
           </article>
         </section>
-      </article>
-    </main>
+      </div>
+    </section>
 
     <script src="./dashboard.js"></script>
   </body>

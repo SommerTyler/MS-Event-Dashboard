@@ -6,73 +6,80 @@
     <title>M+S Eventagentur</title>
     <link rel="stylesheet" href="./styles.css" />
   </head>
-  <body class="lux-page">
-    <main class="lux-wall">
-      <article class="lux-panel hero-main">
-        <header class="lux-nav">
-          <div class="lux-logo">M+S <span>EVENTAGENTUR</span></div>
-          <nav>
-            <a href="#">Home</a>
-            <a href="#">Eventregister</a>
-            <a href="#">Journal</a>
-            <a href="#">Contact</a>
-          </nav>
-        </header>
-        <div class="lux-content">
-          <h1>Creating Memories That Last</h1>
-          <a class="lux-cta" href="./login.html">Entdecken Sie unsere Magie</a>
-        </div>
-      </article>
+  <body>
+    <header class="nav">
+      <a class="nav__logo" href="./landing.html">M+<span class="gold">S</span><span class="nav__logo-sub">Eventagentur</span></a>
+      <nav class="nav__links">
+        <a class="nav__link active" href="./landing.html">Home</a>
+        <a class="nav__link" href="#services">Dienstleistungen</a>
+        <a class="nav__link" href="#journal">Journal</a>
+        <a class="nav__link" href="./login.html">Login</a>
+      </nav>
+      <div class="nav__icons">
+        <a class="nav__icon-btn" href="./login.html" aria-label="Login">&#9679;</a>
+      </div>
+    </header>
 
-      <article class="lux-panel services">
-        <header class="lux-nav">
-          <div class="lux-logo">M+S <span>EVENTAGENTUR</span></div>
-          <nav>
-            <a href="#">Home</a>
-            <a href="#">Einteilungen</a>
-            <a href="#">Journal</a>
-            <a href="#">Contact</a>
-          </nav>
-        </header>
-        <div class="lux-center">
-          <h2>Unsere Dienstleistungen</h2>
-          <p>Interaktive Moderation, DJ-Setup und Lightshows</p>
-        </div>
-      </article>
+    <section class="hero">
+      <div class="hero__ribbon"></div>
+      <div class="container hero__content">
+        <p class="hero__eyebrow">M+S Eventagentur</p>
+        <h1 class="hero__title">Creating Memories</h1>
+        <h2 class="hero__subtitle">that last</h2>
+        <p class="hero__body">
+          Exklusive Eventproduktion, kreative Konzepte und ein eingespieltes Team fuer hochwertige Markenerlebnisse.
+        </p>
+        <a class="btn btn--gold" href="./login.html"><span>Entdecken Sie unsere Magie</span></a>
+      </div>
+      <div class="hero__scroll-hint">
+        <div class="hero__scroll-mouse"></div>
+      </div>
+    </section>
 
-      <article class="lux-panel journal">
-        <header class="lux-nav">
-          <div class="lux-logo">M+S <span>EVENTAGENTUR</span></div>
-          <nav>
-            <a href="#">Home</a>
-            <a href="#">Mark Experience</a>
-            <a href="#">Journal</a>
-            <a href="#">Contact</a>
-          </nav>
-        </header>
-        <div class="lux-content">
-          <h2>M+S Journale</h2>
-          <p>Kreativ-Konzepte und Umsetzung</p>
+    <section id="services" class="section section--dark">
+      <div class="container">
+        <div class="section-header section-header--center">
+          <p class="section-header__tag">Unsere Leistungen</p>
+          <h2 class="section-header__title">Interaktive Shows und <em>Premium Events</em></h2>
+          <p class="section-header__body">Moderation, DJ-Setups, Lichtdesign und Full-Service Umsetzung aus einer Hand.</p>
         </div>
-      </article>
+        <div class="grid-3">
+          <article class="card">
+            <div class="card__body">
+              <p class="card__category">Live</p>
+              <h3 class="card__title">Buehne & Moderation</h3>
+              <p class="card__excerpt">Professionelle Hosts und Ablaufregie fuer Corporate Events.</p>
+            </div>
+          </article>
+          <article class="card">
+            <div class="card__body">
+              <p class="card__category">Sound</p>
+              <h3 class="card__title">DJ & Audio Konzept</h3>
+              <p class="card__excerpt">Kuratiertes Sounddesign fuer Galas, Messen und Launches.</p>
+            </div>
+          </article>
+          <article class="card">
+            <div class="card__body">
+              <p class="card__category">Light</p>
+              <h3 class="card__title">Licht-Inszenierung</h3>
+              <p class="card__excerpt">Atmosphaerische Lichtwelten fuer eindrucksvolle Markenauftritte.</p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
 
-      <article class="lux-panel references">
-        <header class="lux-nav">
-          <div class="lux-logo">M+S <span>EVENTAGENTUR</span></div>
-          <nav>
-            <a href="#">Home</a>
-            <a href="#">The Experience</a>
-            <a href="#">Journal</a>
-            <a href="#">Contact</a>
-          </nav>
-        </header>
-        <div class="lux-content">
-          <h2>Referenzen</h2>
-          <p>Kreativ-Konzepte</p>
-          <p>Partner-Netzwerk</p>
-          <p>Kontakt</p>
-        </div>
-      </article>
-    </main>
+    <section id="journal" class="section section--mid">
+      <div class="container grid-2">
+        <article class="card card--stat">
+          <p class="card--stat__number">120+</p>
+          <p class="card--stat__label">Events pro Jahr</p>
+        </article>
+        <article class="card card--stat">
+          <p class="card--stat__number">24</p>
+          <p class="card--stat__label">Mitarbeiter im Einsatz</p>
+        </article>
+      </div>
+    </section>
   </body>
 </html>

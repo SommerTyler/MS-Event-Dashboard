@@ -6,39 +6,41 @@
     <title>Login | M+S Eventagentur</title>
     <link rel="stylesheet" href="./styles.css" />
   </head>
-  <body class="lux-page">
-    <main class="auth-stage">
-      <article class="lux-panel auth-panel">
-        <header class="lux-nav">
-          <a class="lux-logo" href="./landing.html">M+S <span>EVENTAGENTUR</span></a>
-          <nav>
-            <a href="./landing.html">Home</a>
-            <a href="#">Mitarbeiter</a>
-            <a href="#">Journal</a>
-            <a href="#">Contact</a>
-          </nav>
-        </header>
+  <body>
+    <header class="nav scrolled">
+      <a class="nav__logo" href="./landing.html">M+<span class="gold">S</span><span class="nav__logo-sub">Eventagentur</span></a>
+      <nav class="nav__links">
+        <a class="nav__link" href="./landing.html">Home</a>
+        <a class="nav__link active" href="./login.html">Login</a>
+      </nav>
+    </header>
 
-        <form class="form-card" id="login-form">
-          <h1>Mitarbeiter-Login</h1>
-          <p class="muted">
-            Testzugang: <strong>admin@ms-events.de</strong> / <strong>event2026</strong>
-          </p>
-          <div class="field">
-            <label for="email">E-Mail</label>
-            <input id="email" name="email" type="email" required />
+    <section class="section section--deeper login-wrap">
+      <div class="container">
+        <div class="section-header section-header--center">
+          <p class="section-header__tag">Mitarbeiterbereich</p>
+          <h1 class="section-header__title">Sicherer Login</h1>
+          <p class="section-header__body">Bitte melde dich mit den internen Zugangsdaten an.</p>
+        </div>
+        <form class="card login-card" id="login-form">
+          <div class="card__body">
+            <div class="form-group">
+              <label class="form-label" for="email">E-Mail</label>
+              <input class="form-input" id="email" name="email" type="email" required />
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="password">Passwort</label>
+              <input class="form-input" id="password" name="password" type="password" required />
+            </div>
+            <button type="submit" class="btn btn--gold" style="width: 100%; justify-content: center">
+              <span>Einloggen</span>
+            </button>
+            <p class="login-hint">Testzugang: admin@ms-events.de / event2026</p>
+            <p id="error" class="error"></p>
           </div>
-          <div class="field">
-            <label for="password">Passwort</label>
-            <input id="password" name="password" type="password" required />
-          </div>
-          <button type="submit" class="btn btn-primary" style="width: 100%">
-            Einloggen
-          </button>
-          <p id="error" class="error"></p>
         </form>
-      </article>
-    </main>
+      </div>
+    </section>
 
     <script src="./auth.js"></script>
   </body>

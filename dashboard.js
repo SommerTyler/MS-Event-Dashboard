@@ -51,20 +51,25 @@
 
   function statusBadge(status) {
     if (status === "bestaetigt" || status === "verfuegbar") {
-      return '<span class="badge badge-ok">' + status + "</span>";
+      return '<span class="badge badge--gold">' + status + "</span>";
     }
     if (status === "planung" || status === "unterwegs") {
-      return '<span class="badge badge-warn">' + status + "</span>";
+      return '<span class="badge badge--blue">' + status + "</span>";
     }
-    return '<span class="badge badge-danger">' + status + "</span>";
+    return '<span class="badge badge--blue">' + status + "</span>";
   }
 
   function renderStats() {
     stats.innerHTML = "";
     statData.forEach(function (item) {
       const card = document.createElement("article");
-      card.className = "card stat";
-      card.innerHTML = "<h3>" + item.title + "</h3><p>" + item.value + "</p>";
+      card.className = "card card--stat";
+      card.innerHTML =
+        '<p class="card--stat__number">' +
+        item.value +
+        '</p><p class="card--stat__label">' +
+        item.title +
+        "</p>";
       stats.appendChild(card);
     });
   }
