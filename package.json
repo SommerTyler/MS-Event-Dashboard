@@ -1,0 +1,10 @@
+{
+  "name": "ms-event-dashboard",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Static dashboard site served via Node on Render.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  }
+}
