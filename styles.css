@@ -260,3 +260,292 @@ textarea {
     grid-column: span 12;
   }
 }
+
+/* Landing page redesign inspired by provided luxury mockups */
+.lux-page {
+  min-height: 100vh;
+  background: radial-gradient(circle at 20% 10%, #11244a, #05070c 55%);
+  color: #f2e2be;
+  font-family: Georgia, "Times New Roman", serif;
+}
+
+.lux-wall {
+  width: min(1380px, 96vw);
+  margin: 0 auto;
+  padding: 18px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.lux-panel {
+  position: relative;
+  overflow: hidden;
+  border-radius: 12px;
+  min-height: 340px;
+  border: 1px solid rgba(255, 229, 173, 0.25);
+  box-shadow: 0 20px 35px rgba(0, 0, 0, 0.45);
+  background: linear-gradient(115deg, #0b0e15 0%, #102746 52%, #0d1530 100%);
+}
+
+.lux-panel::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 70% 50%, rgba(255, 223, 145, 0.16), transparent 48%);
+  pointer-events: none;
+}
+
+.lux-nav {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 24px;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.lux-logo {
+  font-size: 1.95rem;
+  line-height: 1;
+  letter-spacing: 0.5px;
+}
+
+.lux-logo span {
+  display: block;
+  font-size: 0.48rem;
+  letter-spacing: 1.7px;
+  margin-top: 2px;
+}
+
+.lux-nav nav {
+  display: flex;
+  gap: 18px;
+}
+
+.lux-nav a {
+  font-size: 0.65rem;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  color: rgba(240, 223, 184, 0.9);
+}
+
+.lux-content {
+  position: relative;
+  z-index: 2;
+  padding: 26px 34px;
+  max-width: 62%;
+}
+
+.lux-content h1,
+.lux-content h2 {
+  margin: 0 0 10px;
+  font-weight: 500;
+  text-transform: uppercase;
+  line-height: 1.05;
+  letter-spacing: 0.5px;
+}
+
+.lux-content h1 {
+  font-size: clamp(2.3rem, 4.3vw, 4.2rem);
+}
+
+.lux-content h2 {
+  font-size: clamp(2rem, 3.5vw, 3.3rem);
+}
+
+.lux-content p {
+  margin: 0;
+  font-size: clamp(1.4rem, 2vw, 2.4rem);
+  line-height: 1.1;
+  text-transform: uppercase;
+}
+
+.lux-cta {
+  display: inline-block;
+  margin-top: 22px;
+  background: linear-gradient(180deg, #f7e5bf, #d9b578);
+  color: #25201a;
+  border-radius: 999px;
+  padding: 10px 18px;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+}
+
+.hero-main {
+  background: linear-gradient(112deg, #0a0d14 2%, #0e1f3a 42%, #183864 100%);
+}
+
+.hero-main::after {
+  content: "";
+  position: absolute;
+  right: 10%;
+  top: 22%;
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #f4d483 0, #ba8f4a 34%, rgba(21, 35, 66, 0) 66%);
+  box-shadow: 0 0 45px rgba(233, 198, 127, 0.45);
+}
+
+.services {
+  background: linear-gradient(105deg, #0b0e16 0%, #12253d 56%, #102a54 100%);
+}
+
+.services .lux-center {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  margin-top: 56px;
+}
+
+.services h2 {
+  margin: 0;
+  text-transform: uppercase;
+  font-size: clamp(2rem, 3.3vw, 3rem);
+  font-weight: 500;
+}
+
+.services p {
+  margin: 8px 0 0;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  color: rgba(236, 221, 186, 0.72);
+  font-size: 0.92rem;
+}
+
+.journal {
+  background: linear-gradient(105deg, #0a0d12 0%, #0f182a 48%, #1a355a 100%);
+}
+
+.references {
+  background: linear-gradient(102deg, #0b1017 0%, #112646 50%, #193a63 100%);
+}
+
+@media (max-width: 900px) {
+  .lux-wall {
+    grid-template-columns: 1fr;
+  }
+
+  .lux-content {
+    max-width: 86%;
+    padding: 22px;
+  }
+}
+
+.auth-stage,
+.dashboard-shell {
+  width: min(1380px, 96vw);
+  margin: 0 auto;
+  padding: 18px;
+}
+
+.auth-panel {
+  min-height: calc(100vh - 36px);
+  display: flex;
+  flex-direction: column;
+}
+
+.auth-panel .form-card {
+  margin: auto;
+  width: min(460px, 92%);
+  background: linear-gradient(170deg, rgba(14, 22, 38, 0.95), rgba(19, 40, 69, 0.9));
+  border: 1px solid rgba(255, 224, 164, 0.35);
+  color: #f5e6c3;
+}
+
+.auth-panel .form-card h1 {
+  font-family: Georgia, "Times New Roman", serif;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  font-weight: 500;
+}
+
+.auth-panel label,
+.auth-panel .muted {
+  color: rgba(245, 230, 195, 0.85);
+}
+
+.auth-panel input {
+  border: 1px solid rgba(236, 203, 140, 0.4);
+  background: rgba(9, 16, 30, 0.75);
+  color: #f7ead1;
+}
+
+.auth-panel .btn-primary,
+.dashboard-panel .btn-secondary {
+  border: 1px solid rgba(236, 199, 128, 0.6);
+  background: linear-gradient(180deg, #f8e7c2, #d0a86a);
+  color: #1f1a14;
+}
+
+.dashboard-panel {
+  padding: 10px 16px 18px;
+}
+
+.dashboard-grid {
+  margin: 0.8rem 0;
+}
+
+.dashboard-user {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: 12px;
+}
+
+.dashboard-panel .pill {
+  background: rgba(14, 26, 46, 0.84);
+  border: 1px solid rgba(244, 217, 161, 0.38);
+  color: #f5dfaf;
+}
+
+.dashboard-panel .card {
+  background: linear-gradient(160deg, rgba(9, 15, 25, 0.92), rgba(21, 40, 66, 0.88));
+  border: 1px solid rgba(233, 203, 141, 0.3);
+  color: #f3e3c1;
+}
+
+.dashboard-panel .section-title {
+  font-family: Georgia, "Times New Roman", serif;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-weight: 500;
+}
+
+.dashboard-panel .stat h3,
+.dashboard-panel th {
+  color: rgba(238, 219, 180, 0.76);
+}
+
+.dashboard-panel td {
+  border-bottom-color: rgba(238, 210, 151, 0.15);
+}
+
+.dashboard-panel .list li {
+  color: rgba(245, 233, 204, 0.95);
+}
+
+.dashboard-panel select {
+  max-width: 250px;
+  border: 1px solid rgba(244, 211, 150, 0.4);
+  background: rgba(8, 16, 28, 0.8);
+  color: #f7e8c8;
+}
+
+.dashboard-panel .badge-ok {
+  background: rgba(36, 88, 62, 0.35);
+  color: #8ce2ad;
+}
+
+.dashboard-panel .badge-warn {
+  background: rgba(118, 93, 42, 0.35);
+  color: #ffd57a;
+}
+
+.dashboard-panel .badge-danger {
+  background: rgba(119, 45, 45, 0.35);
+  color: #ff9f97;
+}

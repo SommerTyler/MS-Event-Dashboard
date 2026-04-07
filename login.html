@@ -6,33 +6,38 @@
     <title>Login | M+S Eventagentur</title>
     <link rel="stylesheet" href="./styles.css" />
   </head>
-  <body>
-    <header class="topbar">
-      <div class="container topbar-row">
-        <a class="brand" href="./landing.html">M+S Eventagentur</a>
-        <div class="pill">Sicherer Login</div>
-      </div>
-    </header>
+  <body class="lux-page">
+    <main class="auth-stage">
+      <article class="lux-panel auth-panel">
+        <header class="lux-nav">
+          <a class="lux-logo" href="./landing.html">M+S <span>EVENTAGENTUR</span></a>
+          <nav>
+            <a href="./landing.html">Home</a>
+            <a href="#">Mitarbeiter</a>
+            <a href="#">Journal</a>
+            <a href="#">Contact</a>
+          </nav>
+        </header>
 
-    <main class="form-wrap">
-      <form class="form-card" id="login-form">
-        <h1>Mitarbeiter-Login</h1>
-        <p class="muted">
-          Testzugang: <strong>admin@ms-events.de</strong> / <strong>event2026</strong>
-        </p>
-        <div class="field">
-          <label for="email">E-Mail</label>
-          <input id="email" name="email" type="email" required />
-        </div>
-        <div class="field">
-          <label for="password">Passwort</label>
-          <input id="password" name="password" type="password" required />
-        </div>
-        <button type="submit" class="btn btn-primary" style="width: 100%">
-          Einloggen
-        </button>
-        <p id="error" class="error"></p>
-      </form>
+        <form class="form-card" id="login-form">
+          <h1>Mitarbeiter-Login</h1>
+          <p class="muted">
+            Testzugang: <strong>admin@ms-events.de</strong> / <strong>event2026</strong>
+          </p>
+          <div class="field">
+            <label for="email">E-Mail</label>
+            <input id="email" name="email" type="email" required />
+          </div>
+          <div class="field">
+            <label for="password">Passwort</label>
+            <input id="password" name="password" type="password" required />
+          </div>
+          <button type="submit" class="btn btn-primary" style="width: 100%">
+            Einloggen
+          </button>
+          <p id="error" class="error"></p>
+        </form>
+      </article>
     </main>
 
     <script src="./auth.js"></script>
